@@ -7,6 +7,7 @@ package automecanica;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import tela.MainFrm;
 
 /**
  *
@@ -17,27 +18,27 @@ public class Automecanica {
     public static Connection conexao = null;
 
     public static void main(String[] args) {
-        if (abrirConexao()) {
-//            new FrmPrincipal().setVisible(true);
+        if (openConnection()) {
+            new MainFrm().setVisible(true);
         } else {
 //            JOptionPane.showMessageDialog(null, "Errrroouuuu");            
         }  
     }
     
-    private static boolean abrirConexao () {
+    private static boolean openConnection () {
         try {
             String dbdriver = "com.mysql.jdbc.Driver";
             String dburl = "jdbc:mysql://localhost/mecanica_db";
             String dbuser = "root";
             String dbsenha = "password";
 
-            // Carrega Driver do Banco de Dados
+            // Load Driver of the Database
             Class.forName(dbdriver);
 
-            if (dbuser.length() != 0) // conexão COM usuário e senha
+            if (dbuser.length() != 0) // Connection with user and password
             {
                 conexao = DriverManager.getConnection(dburl, dbuser, dbsenha);
-            } else // conexão SEM usuário e senha
+            } else // Connection without user and password
             {
                 conexao = DriverManager.getConnection(dburl);
             }

@@ -5,6 +5,8 @@
  */
 package tela;
 
+import java.awt.Color;
+
 /**
  *
  * @author minuzzi
@@ -16,6 +18,11 @@ public class LoginFrm extends javax.swing.JFrame {
      */
     public LoginFrm() {
         initComponents();
+        Color backgroundColor = new Color(41,41,46);
+        Color letherColor = new Color(255,255,255);
+        Color titleColor = new Color(97,218,251);
+        Color detailColor = new Color(235,164,23);
+        this.getContentPane().setBackground( backgroundColor );
     }
 
     /**
@@ -30,8 +37,8 @@ public class LoginFrm extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jTextField2 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        helpTxt1 = new javax.swing.JLabel();
+        helpTxt2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -42,11 +49,11 @@ public class LoginFrm extends javax.swing.JFrame {
 
         jTextField2.setText("Senha");
 
-        jLabel2.setFont(new java.awt.Font("Ubuntu", 0, 8)); // NOI18N
-        jLabel2.setText("Não conseguiu fazer o login? ");
+        helpTxt1.setFont(new java.awt.Font("Ubuntu", 0, 8)); // NOI18N
+        helpTxt1.setText("Não conseguiu fazer o login? ");
 
-        jLabel3.setFont(new java.awt.Font("Ubuntu", 0, 8)); // NOI18N
-        jLabel3.setText("Entre em contato com a equipe: (51) 0000-0000");
+        helpTxt2.setFont(new java.awt.Font("Ubuntu", 0, 8)); // NOI18N
+        helpTxt2.setText("Entre em contato com a equipe: (51) 0000-0000");
 
         jButton1.setText("Login");
 
@@ -60,11 +67,11 @@ public class LoginFrm extends javax.swing.JFrame {
                         .addGap(23, 23, 23)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel3)
+                            .addComponent(helpTxt2)
                             .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(56, 56, 56)
-                        .addComponent(jLabel2)))
+                        .addComponent(helpTxt1)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -88,9 +95,9 @@ public class LoginFrm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(helpTxt1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(helpTxt2, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -133,10 +140,10 @@ public class LoginFrm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel helpTxt1;
+    private javax.swing.JLabel helpTxt2;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables

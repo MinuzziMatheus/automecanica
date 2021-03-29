@@ -12,12 +12,12 @@ import java.util.*;
  *
  * @author minuzzi
  */
-public class ConexaoDB {
+public class ConnectionDB {
     
-    private static ConexaoDB instancia = null;
+    private static ConnectionDB instancia = null;
     private Connection conexao = null;
     
-    public ConexaoDB() {
+    public ConnectionDB() {
         try {
             // Carrega informações do arquivo de propriedades
             Properties prop = new Properties();
@@ -25,10 +25,10 @@ public class ConexaoDB {
 //            String dbdriver = prop.getProperty("db.driver");
 //            String dburl = prop.getProperty("db.url");
 //            String dbuser = prop.getProperty("db.user");
-//            String dbsenha = "password";
+//            String dbpassword = "password";
 
             final String dbuser = "root";
-            final String dbsenha = "password";
+            final String dbpassword = "password";
             final String dburl = "jdbc:mysql://localhost/mecanica_db";
             final String dbdriver = "com.mysql.jdbc.Driver";
 
@@ -37,7 +37,7 @@ public class ConexaoDB {
 
             if (dbuser.length() != 0) // conexão COM usuário e senha
             {
-                conexao = DriverManager.getConnection(dburl, dbuser, dbsenha);
+                conexao = DriverManager.getConnection(dburl, dbuser, dbpassword);
             } else // conexão SEM usuário e senha
             {
                 conexao = DriverManager.getConnection(dburl);
@@ -51,9 +51,9 @@ public class ConexaoDB {
     }
     
     // Retorna instância
-    public static ConexaoDB getInstance() {
+    public static ConnectionDB getInstance() {
         if (instancia == null) {
-            instancia = new ConexaoDB();
+            instancia = new ConnectionDB();
         }
         return instancia;
     }
