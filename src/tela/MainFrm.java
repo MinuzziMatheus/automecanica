@@ -6,9 +6,9 @@
 package tela;
 
 import dao.EmployeeDAO;
-import dao.FunctionEDAO;
+import dao.EmployeeFunctionDAO;
 import entidade.Employee;
-import entidade.FunctionE;
+import entidade.EmployeeFunction;
 import java.util.HashSet;
 import java.util.Set;
 import javax.swing.JOptionPane;
@@ -163,7 +163,7 @@ public class MainFrm extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtCargo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 138, Short.MAX_VALUE)
                 .addComponent(btnSave)
                 .addGap(73, 73, 73))
         );
@@ -195,9 +195,9 @@ public class MainFrm extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void btnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveActionPerformed
-        FunctionEDAO categDAO = new FunctionEDAO();
+        EmployeeFunctionDAO categDAO = new EmployeeFunctionDAO();
 
-        FunctionE functionE = new FunctionE();
+        EmployeeFunction functionE = new EmployeeFunction();
         functionE.setName(txtCargo.getText());
         functionE.setSalary(0.00);
         

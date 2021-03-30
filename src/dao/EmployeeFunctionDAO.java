@@ -6,15 +6,15 @@
 package dao;
 
 import apoio.ConnectionDB;
-import entidade.FunctionE;
+import entidade.EmployeeFunction;
 import java.sql.Statement;
 
 /**
  *
  * @author minuzzi
  */
-public class FunctionEDAO {
-    public String salvar(FunctionE f) {
+public class EmployeeFunctionDAO {
+    public String salvar(EmployeeFunction f) {
         try {
             Statement stm = ConnectionDB.getInstance().getConnection().createStatement();
             

@@ -2,8 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package apoio;
+package dao;
 
+import apoio.ComboItem;
+import apoio.ConnectionDB;
 import java.sql.ResultSet;
 import javax.swing.JComboBox;
 

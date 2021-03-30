@@ -15,6 +15,7 @@ public class Employee {
                    name,
                    password;
     private char situation;
+    private int cargo_id;
 
     public int getId() {
         return id;
@@ -55,4 +56,14 @@ public class Employee {
     public void setSituation(char situation) {
         this.situation = situation;
     }
+
+    public int getCargo_id() {
+        return cargo_id;
+    }
+
+    public void setCargo_id(int cargo_id) {
+        this.cargo_id = cargo_id;
+    }
+    
+    
 }

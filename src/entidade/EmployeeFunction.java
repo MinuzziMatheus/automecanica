@@ -9,7 +9,7 @@ package entidade;
  *
  * @author minuzzi
  */
-public class FunctionE {
+public class EmployeeFunction {
     private int id;
     private String name;
     private double salary;
