@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.util.ArrayList;
 import java.sql.*;
+import java.util.List;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
@@ -31,22 +32,13 @@ public class EmployeeDAO {
             
             String sql = "";
             
-            if (employee.getId() == 0) {
-                sql = "Insert into funcionario values "
-                        + "(default,"
-                        + " '" + employee.getName() + "',"
-                        + " '" + employee.getEmail() + "',"
-                        + " '" + employee.getPassword() + "',"
-                        + " 'a'," 
-                        + " " + employee.getCargo_id() + ");";
-            } else {
-                sql = "update funcionario "
-                        + "set descricao = '" + employee.getName() + "', "
-                        + "situacao = '" + employee.getSituation() + "', "
-                        + "email = '" + employee.getEmail() + "', "
-                        + "cargo_id = " + employee.getCargo_id() + " "
-                        + "where id = " + employee.getId() + ";";
-            }
+            sql = "Insert into funcionario values "
+                    + "(default,"
+                    + " '" + employee.getName() + "',"
+                    + " '" + employee.getEmail() + "',"
+                    + " '" + employee.getPassword() + "',"
+                    + " 'a'," 
+                    + " " + employee.getFunction_id() + ");";
             
             int result = stm.executeUpdate(sql);
             
@@ -88,8 +80,10 @@ public class EmployeeDAO {
             
             String sql = "update funcionario "
                         + "set descricao = '" + employee.getName() + "', "
-                        + "situacao = '" + employee.getSituation() + "', "
-                        + "email = '" + employee.getEmail() + "'"
+                        + "senha = '" + employee.getPassword() + "', "
+                        + "cargo_id = '" + employee.getFunction_id() + "', "
+                        + "email = '" + employee.getEmail() + "', "
+                        + "situacao = '" + employee.getSituation() + "'"
                         + "where id = " + employee.getId() + ";";
             
             int result = stm.executeUpdate(sql);
@@ -103,5 +97,36 @@ public class EmployeeDAO {
             System.out.println("Erro ao salvar: " + e);
             return e.toString();
         }
+    }
+    
+    public List<Employee> getAll(){
+        try {
+            Statement stm = ConnectionDB.getInstance().getConnection().createStatement();
+            
+            String sql = "select * from funcionario";
+            
+            ResultSet result = null;
+            
+            result = stm.executeQuery(sql);
+            List<Employee> listE = new ArrayList<>();
+            while (result.next()){
+                Employee employee = new Employee(
+                        result.getString(2),
+                        result.getString(3),
+                        result.getString(4),
+                        result.getString(6).charAt(0),
+                        result.getInt(5)
+                        
+                );
+                listE.add(employee);
+            }
+            
+            return listE;
+            
+        } catch (Exception e) {
+            System.out.println("Erro ao buscar dados: " + e);
+        }
+        
+        return null;
     }
 }

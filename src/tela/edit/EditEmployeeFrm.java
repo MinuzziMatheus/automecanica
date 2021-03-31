@@ -5,6 +5,11 @@
  */
 package tela.edit;
 
+import apoio.ComboItem;
+import dao.EmployeeDAO;
+import entidade.Employee;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author minuzzi
@@ -14,7 +19,13 @@ public class EditEmployeeFrm extends javax.swing.JDialog {
     /**
      * Creates new form EditEmployeeFrm
      */
+    
     public EditEmployeeFrm(java.awt.Frame parent, boolean modal) {
+        super(parent, modal);
+        initComponents();
+    }
+    
+    public EditEmployeeFrm(java.awt.Frame parent, boolean modal, int id) {
         super(parent, modal);
         initComponents();
     }
@@ -140,20 +151,21 @@ public class EditEmployeeFrm extends javax.swing.JDialog {
     }//GEN-LAST:event_functionComboActionPerformed
 
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
-//        EmployeeDAO employeeDao = new EmployeeDAO();
-//        Employee employee = new Employee();
-//        employee.setId(idEmployee);
-//        employee.setName(nameField.getText());
-//        employee.setEmail(emailField.getText());
-//        employee.setPassword(passwordField.getText());
-//        employee.setCargo_id(((ComboItem) functionCombo.getSelectedItem()).getCodigo());
-//
-//        String result = employeeDao.employeeRegister(employee);
-//        if(Integer.parseInt(result) > 0){
-//            JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
-//        } else {
-//            JOptionPane.showMessageDialog(null, "Erro ao cadastrar usuário.");
-//        }
+        EmployeeDAO employeeDao = new EmployeeDAO();
+        Employee employee = new Employee(
+                emailField.getText(), 
+                nameField.getText(), 
+                passwordField.getText(), 
+                'a',
+                ((ComboItem) functionCombo.getSelectedItem()).getCodigo());
+
+        String result = employeeDao.employeeEdit(employee);
+        
+        if(Integer.parseInt(result) > 0){
+            JOptionPane.showMessageDialog(null, "Usuário editado com sucesso!");
+        } else {
+            JOptionPane.showMessageDialog(null, "Erro ao editar usuário.");
+        }
     }//GEN-LAST:event_saveBtnActionPerformed
 
     /**

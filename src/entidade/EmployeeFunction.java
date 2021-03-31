@@ -14,6 +14,11 @@ public class EmployeeFunction {
     private String name;
     private double salary;
 
+    public EmployeeFunction(String name, double salary) {
+        this.name = name;
+        this.salary = salary;
+    }
+
     public int getId() {
         return id;
     }

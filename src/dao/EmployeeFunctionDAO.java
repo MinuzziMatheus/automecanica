@@ -14,7 +14,7 @@ import java.sql.Statement;
  * @author minuzzi
  */
 public class EmployeeFunctionDAO {
-    public String salvar(EmployeeFunction f) {
+    public String save(EmployeeFunction f) {
         try {
             Statement stm = ConnectionDB.getInstance().getConnection().createStatement();
             
@@ -25,11 +25,13 @@ public class EmployeeFunctionDAO {
 
             System.out.println("SQL: " + sql);
 
-            int resultado = stm.executeUpdate(sql);
+            int result = stm.executeUpdate(sql);
 
+            String feedBackMessage = ""+result+"";
             
+            System.out.println("SQL: " + sql);
             
-            return null;
+            return feedBackMessage;
         } catch (Exception e) {
             System.out.println("Erro ao salvar categoria: " + e);
             return e.toString();

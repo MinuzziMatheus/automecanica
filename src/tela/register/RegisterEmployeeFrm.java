@@ -22,8 +22,6 @@ public class RegisterEmployeeFrm extends javax.swing.JDialog {
     /**
      * Creates new form Teste
      */
-    private int idEmployee = 0;
-    
     public RegisterEmployeeFrm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
@@ -52,7 +50,7 @@ public class RegisterEmployeeFrm extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setText("Cadastro:");
+        jLabel1.setText("Cadastro de Funcionário:");
 
         jLabel2.setText("Nome:");
 
@@ -102,19 +100,19 @@ public class RegisterEmployeeFrm extends javax.swing.JDialog {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(functionCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(functionCombo, 0, 214, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addGap(16, 16, 16)
                                 .addComponent(emailField))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(77, 77, 77)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 116, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(nameField)))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(nameField))))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -150,19 +148,15 @@ public class RegisterEmployeeFrm extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_nameFieldActionPerformed
 
-    private void functionComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_functionComboActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_functionComboActionPerformed
-
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
         EmployeeDAO employeeDao = new EmployeeDAO();
-        Employee employee = new Employee();
-        employee.setId(idEmployee);
-        employee.setName(nameField.getText());
-        employee.setEmail(emailField.getText());
-        employee.setPassword(passwordField.getText());
-        employee.setCargo_id(((ComboItem) functionCombo.getSelectedItem()).getCodigo());
-        
+        Employee employee = new Employee(
+                emailField.getText(), 
+                nameField.getText(), 
+                passwordField.getText(), 
+                'a', 
+                ((ComboItem) functionCombo.getSelectedItem()).getCodigo());
+
         String result = employeeDao.employeeRegister(employee);
         if(Integer.parseInt(result) > 0){
             JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
@@ -170,6 +164,10 @@ public class RegisterEmployeeFrm extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "Erro ao cadastrar usuário.");
         }
     }//GEN-LAST:event_saveBtnActionPerformed
+
+    private void functionComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_functionComboActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_functionComboActionPerformed
 
     /**
      * @param args the command line arguments

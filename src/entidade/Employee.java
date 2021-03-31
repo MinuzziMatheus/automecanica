@@ -15,7 +15,15 @@ public class Employee {
                    name,
                    password;
     private char situation;
-    private int cargo_id;
+    private int function_id;
+
+    public Employee(String email, String name, String password, char situation, int function_id) {
+        this.email = email;
+        this.name = name;
+        this.password = password;
+        this.situation = situation;
+        this.function_id = function_id;
+    }
 
     public int getId() {
         return id;
@@ -57,12 +65,12 @@ public class Employee {
         this.situation = situation;
     }
 
-    public int getCargo_id() {
-        return cargo_id;
+    public int getFunction_id() {
+        return function_id;
     }
 
-    public void setCargo_id(int cargo_id) {
-        this.cargo_id = cargo_id;
+    public void setFunction_id(int function_id) {
+        this.function_id = function_id;
     }
     
     
