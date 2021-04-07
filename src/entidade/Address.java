@@ -9,7 +9,7 @@ package entidade;
  *
  * @author minuzzi
  */
-public class Adress {
+public class Address {
     private int id;
     private String street,
             number,
@@ -17,7 +17,7 @@ public class Adress {
     private int client_id,
                 city_id;
 
-    public Adress(String street, String number, String neighborhood, int client_id, int city_id) {
+    public Address(String street, String number, String neighborhood, int client_id, int city_id) {
         this.street = street;
         this.number = number;
         this.neighborhood = neighborhood;

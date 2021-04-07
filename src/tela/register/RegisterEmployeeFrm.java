@@ -7,6 +7,7 @@ package tela.register;
 
 import apoio.ComboItem;
 import apoio.ConnectionDB;
+import apoio.Cryptography;
 import dao.CombosDAO;
 import dao.EmployeeDAO;
 import entidade.Employee;
@@ -151,9 +152,9 @@ public class RegisterEmployeeFrm extends javax.swing.JDialog {
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
         EmployeeDAO employeeDao = new EmployeeDAO();
         Employee employee = new Employee(
-                emailField.getText(), 
                 nameField.getText(), 
-                passwordField.getText(), 
+                emailField.getText(), 
+                Cryptography.criptografar(passwordField.getText()),
                 'a', 
                 ((ComboItem) functionCombo.getSelectedItem()).getCodigo());
 

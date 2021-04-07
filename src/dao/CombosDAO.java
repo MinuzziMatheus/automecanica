@@ -55,13 +55,39 @@ public class CombosDAO {
         combo.addItem(item);
 
         try {
-            resultado = new ConnectionDB().getConnection().createStatement().executeQuery("select * from " + tabela + " " + complementoSQL);
-
+            resultado = new ConnectionDB().getConnection().createStatement().executeQuery("select id from " + tabela + " WHERE estado_id = " + complementoSQL + ";");
+            System.out.println(resultado);
             if (resultado.isBeforeFirst()) {
                 while (resultado.next()) {
                     item = new ComboItem();
                     item.setCodigo(resultado.getInt(campo1));
                     item.setDescricao(resultado.getString(campo2));
+
+                    combo.addItem(item);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Erro ao popular Combo = " + e.toString());
+        }
+    }
+    
+    //    constructor 3
+    public void popularCombo(String tabela, JComboBox combo, String complement) {
+        
+        combo.removeAllItems();
+
+        ComboItem item = new ComboItem();
+        item.setCodigo(0);
+        item.setDescricao("Selecione");
+        combo.addItem(item);
+
+        try {
+            resultado = new ConnectionDB().getConnection().createStatement().executeQuery("select * from " + tabela + " where " + complement);
+            if (resultado.isBeforeFirst()) {
+                while (resultado.next()) {
+                    item = new ComboItem();
+                    item.setCodigo(resultado.getInt(1));
+                    item.setDescricao(resultado.getString(2));
 
                     combo.addItem(item);
                 }

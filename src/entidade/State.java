@@ -5,19 +5,18 @@
  */
 package entidade;
 
+import apoio.ConnectionDB;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
 /**
  *
  * @author minuzzi
  */
 public class State {
     private int id;
-    private String name,
-                   uf;
-
-    public State(String name, String uf) {
-        this.name = name;
-        this.uf = uf;
-    }
+    private String nome;
+    private String uf;
 
     public int getId() {
         return id;
@@ -25,14 +24,6 @@ public class State {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getUf() {
@@ -43,5 +34,22 @@ public class State {
         this.uf = uf;
     }
     
+    public int getUf(String uf){
+        try{
+            Statement stm = ConnectionDB.getInstance().getConnection().createStatement();
+            
+            String sql = "";
+            sql = "select max(id) from estado";
+//            sql = "SELECT DISTINCT uf FROM estado WHERE estado = " + uf + ";";
+            
+            ResultSet result = stm.executeQuery(sql);
+            System.out.println(sql);
+            System.out.println("SQL: " + sql);
+
+            return result.getInt(1);
+        } catch (Exception e){
+            return 0;
+        }
+    }
     
 }

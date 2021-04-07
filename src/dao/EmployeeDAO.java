@@ -111,11 +111,12 @@ public class EmployeeDAO {
             List<Employee> listE = new ArrayList<>();
             while (result.next()){
                 Employee employee = new Employee(
-                        result.getString(2),
-                        result.getString(3),
-                        result.getString(4),
-                        result.getString(6).charAt(0),
-                        result.getInt(5)
+                        result.getInt("id"),
+                        result.getString("nome"),
+                        result.getString("email"),
+                        result.getString("senha"),
+                        result.getString("situacao").charAt(0),
+                        result.getInt("cargo_id")
                         
                 );
                 listE.add(employee);

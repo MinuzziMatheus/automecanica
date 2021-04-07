@@ -5,6 +5,10 @@
  */
 package entidade;
 
+import apoio.ConnectionDB;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
 /**
  *
  * @author minuzzi
@@ -12,18 +16,26 @@ package entidade;
 public class Client {
     private int id;
     private String name,
-                   password,
                    cpf,
                    email;
     private char situation;
 
-    public Client(String name, String password, String cpf, String email, char situation) {
+    public Client(String name, String cpf, String email, char situation) {
         this.name = name;
-        this.password = password;
         this.cpf = cpf;
         this.email = email;
         this.situation = situation;
     }
+
+    public Client(int id, String name, String cpf, String email, char situation) {
+        this.id = id;
+        this.name = name;
+        this.cpf = cpf;
+        this.email = email;
+        this.situation = situation;
+    }
+    
+    
 
     public int getId() {
         return id;
@@ -39,14 +51,6 @@ public class Client {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getCpf() {
@@ -71,6 +75,8 @@ public class Client {
 
     public void setSituation(char situation) {
         this.situation = situation;
-    }    
+    }
+
+
     
 }

@@ -5,6 +5,7 @@
  */
 package abstractTableModel;
 
+import dao.EmployeeDAO;
 import entidade.Employee;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,10 @@ public class EmployeeTableModel extends AbstractTableModel {
 
     private List<Employee> dados = new ArrayList<>();
     private String[] colunas = {"Id", "Nome", "Email", "Cargo", "Situação"};
+
+    public EmployeeTableModel() {
+        updateData();
+    }
 
     @Override
     public int getRowCount() {
@@ -50,6 +55,11 @@ public class EmployeeTableModel extends AbstractTableModel {
         }
 
         return null;
+    }
+    
+    
+    public void updateData(){
+        this.dados = new EmployeeDAO().getAll();
     }
 
     public void addRow(Employee p) {//adiciona uma linha

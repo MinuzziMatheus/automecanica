@@ -25,6 +25,17 @@ public class Employee {
         this.function_id = function_id;
     }
 
+    public Employee(int id, String email, String name, String password, char situation, int function_id) {
+        this.id = id;
+        this.email = email;
+        this.name = name;
+        this.password = password;
+        this.situation = situation;
+        this.function_id = function_id;
+    }
+    
+    
+
     public int getId() {
         return id;
     }

@@ -5,7 +5,10 @@
  */
 package tela;
 
+import abstractTableModel.ClientTableModel;
 import abstractTableModel.EmployeeTableModel;
+import abstractTableModel.ItemTableModel;
+import dao.CombosDAO;
 import dao.EmployeeDAO;
 import dao.EmployeeFunctionDAO;
 import entidade.Employee;
@@ -13,8 +16,10 @@ import entidade.EmployeeFunction;
 import java.util.HashSet;
 import java.util.Set;
 import javax.swing.JOptionPane;
+import tela.register.RegisterClientFrm;
 import tela.register.RegisterEmployeeFrm;
 import tela.register.RegisterEmployeeFunctionFrm;
+import tela.register.RegisterItemFrm;
 
 
 /**
@@ -26,11 +31,16 @@ public class MainFrm extends javax.swing.JFrame {
     /**
      * Creates new form MainFrm
      */
-    EmployeeTableModel tableModel = new EmployeeTableModel();
+    EmployeeTableModel employeeTableModel = new EmployeeTableModel();
+    ClientTableModel clientTableModel = new ClientTableModel();
+    ItemTableModel itemTableModel = new ItemTableModel(); 
     
     public MainFrm() {
         initComponents();
-        tblMain.setModel(tableModel);
+//        new LoginFrm().setVisible(false);
+        CombosDAO comboDao = new CombosDAO();
+        tblMain.setModel(employeeTableModel);
+        editBtn.setVisible(true);
     }
 
     /**
@@ -46,11 +56,12 @@ public class MainFrm extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        categoryCombo = new javax.swing.JComboBox<>();
         jTextField1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblMain = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
+        editBtn = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -74,9 +85,15 @@ public class MainFrm extends javax.swing.JFrame {
 
         jLabel1.setText("Categoria");
 
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        categoryCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Funcionário", "Cliente", "item", "Ordem de Serviço" }));
+        categoryCombo.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                categoryComboItemStateChanged(evt);
+            }
+        });
+        categoryCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                categoryComboActionPerformed(evt);
             }
         });
 
@@ -95,6 +112,13 @@ public class MainFrm extends javax.swing.JFrame {
 
         jLabel3.setText("Procurar:");
 
+        editBtn.setText("Editar Funcionário");
+        editBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -104,28 +128,34 @@ public class MainFrm extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 563, Short.MAX_VALUE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addGap(18, 18, 18)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(categoryCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
-                        .addGap(20, 20, 20))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(editBtn))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton1)))
+                        .addGap(21, 21, 21))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
+                    .addComponent(categoryCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(editBtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -146,7 +176,7 @@ public class MainFrm extends javax.swing.JFrame {
 
         jLabel6.setText("Item");
 
-        jLabel7.setText("Cargo");
+        jLabel7.setText("Cargo / Ocupaçã");
 
         employeeBtn.setText("+");
         employeeBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -156,10 +186,20 @@ public class MainFrm extends javax.swing.JFrame {
         });
 
         clientBtn.setText("+");
+        clientBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clientBtnActionPerformed(evt);
+            }
+        });
 
         soBtn.setText("+");
 
         itenBtn.setText("+");
+        itenBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                itenBtnActionPerformed(evt);
+            }
+        });
 
         EmployeeFunctionBtn.setText("+");
         EmployeeFunctionBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -175,29 +215,26 @@ public class MainFrm extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel4))
-                        .addGap(42, 42, 42)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(employeeBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
-                            .addComponent(clientBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addComponent(jLabel5)
-                            .addComponent(jLabel7))
-                        .addGap(21, 21, 21)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(EmployeeFunctionBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(soBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(itenBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap(393, Short.MAX_VALUE))
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(EmployeeFunctionBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
+                    .addComponent(itenBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
+                    .addComponent(soBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
+                    .addComponent(employeeBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE)
+                    .addComponent(clientBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 45, Short.MAX_VALUE))
+                .addGap(361, 361, 361))
         );
+
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {EmployeeFunctionBtn, clientBtn, employeeBtn, itenBtn, soBtn});
+
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(EmployeeFunctionBtn)
@@ -218,7 +255,7 @@ public class MainFrm extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(soBtn)
                     .addComponent(jLabel5))
-                .addContainerGap(103, Short.MAX_VALUE))
+                .addGap(109, 109, 109))
         );
 
         jTabbedPane1.addTab("Cadastro", jPanel1);
@@ -243,9 +280,9 @@ public class MainFrm extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void categoryComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoryComboActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_categoryComboActionPerformed
 
     private void employeeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeeBtnActionPerformed
         new RegisterEmployeeFrm(this, true).setVisible(true);
@@ -254,6 +291,41 @@ public class MainFrm extends javax.swing.JFrame {
     private void EmployeeFunctionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EmployeeFunctionBtnActionPerformed
         new RegisterEmployeeFunctionFrm(this, true).setVisible(true);
     }//GEN-LAST:event_EmployeeFunctionBtnActionPerformed
+
+    private void clientBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clientBtnActionPerformed
+        new RegisterClientFrm(this, true).setVisible(true);
+    }//GEN-LAST:event_clientBtnActionPerformed
+
+    private void categoryComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_categoryComboItemStateChanged
+        if(categoryCombo.getSelectedIndex() == 0){
+            tblMain.setModel(employeeTableModel);
+            editBtn.setText("Editar Funcionário");
+        } else if (categoryCombo.getSelectedIndex() == 1){
+            tblMain.setModel(clientTableModel);
+            editBtn.setText("Editar Cliente");
+        } else if (categoryCombo.getSelectedIndex() == 2){
+            tblMain.setModel(itemTableModel);
+            editBtn.setText("Editar Item");
+        }
+    }//GEN-LAST:event_categoryComboItemStateChanged
+
+    private void itenBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_itenBtnActionPerformed
+        new RegisterItemFrm(this, true).setVisible(true);
+    }//GEN-LAST:event_itenBtnActionPerformed
+
+    private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
+        String idString = String.valueOf(tblMain.getValueAt(tblMain.getSelectedRow(), 0));
+        System.out.println(idString);
+        
+        if(categoryCombo.getSelectedIndex() == 0){
+        } else if (categoryCombo.getSelectedIndex() == 1){
+            
+        } else if (categoryCombo.getSelectedIndex() == 2){
+            
+        } else if (categoryCombo.getSelectedIndex() == 3){
+            
+        }        
+    }//GEN-LAST:event_editBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -292,11 +364,12 @@ public class MainFrm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton EmployeeFunctionBtn;
+    private javax.swing.JComboBox<String> categoryCombo;
     private javax.swing.JButton clientBtn;
+    private javax.swing.JButton editBtn;
     private javax.swing.JButton employeeBtn;
     private javax.swing.JButton itenBtn;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

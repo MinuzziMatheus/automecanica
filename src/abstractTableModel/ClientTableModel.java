@@ -5,6 +5,7 @@
  */
 package abstractTableModel;
 
+import dao.ClientDAO;
 import entidade.Client;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,10 @@ import javax.swing.table.AbstractTableModel;
 public class ClientTableModel extends AbstractTableModel {
     private List<Client> dados = new ArrayList<>();
     private String[] colunas = {"Id", "Nome", "CPF", "E-mail", "Situação"};
+
+    public ClientTableModel() {
+        updateData();
+    }
 
     @Override
     public int getRowCount() {
@@ -60,6 +65,11 @@ public class ClientTableModel extends AbstractTableModel {
         this.dados.remove(linha);
         this.fireTableRowsDeleted(linha, linha);// parâmetros ~> (início, fim)
     }
+    
+    public void updateData(){
+        this.dados = new ClientDAO().getAll();
+    }
+
 
     @Override
     public void setValueAt(Object valor, int linha, int coluna) {

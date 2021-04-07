@@ -26,13 +26,12 @@ public class ClientDAO {
             sql = "Insert into cliente values "
                     + "(default,"
                     + " '" + client.getName() + "',"
-                    + " '" + client.getPassword() + "',"
                     + " '" + client.getCpf() + "',"
                     + " '" + client.getEmail() + "',"
-                    + " 'a'";
+                    + " 'a')";
             
             int result = stm.executeUpdate(sql);
-            
+
             String feedBackMessage = ""+result+"";
             
             System.out.println("SQL: " + sql);
@@ -71,7 +70,6 @@ public class ClientDAO {
             
             String sql = "update cliente "
                         + "set nome = '" + client.getName() + "', "
-                        + "senha = '" + client.getPassword() + "', "
                         + "cpf = '" + client.getCpf()+ "', "
                         + "email = '" + client.getEmail() + "', "
                         + "situacao = '" + client.getSituation() + "', "
@@ -102,11 +100,11 @@ public class ClientDAO {
             List<Client> listE = new ArrayList<>();
             while (result.next()){
                 Client client = new Client(
-                        result.getString(2),
-                        result.getString(3),
-                        result.getString(4),
-                        result.getString(5),
-                        result.getString(6).charAt(0)
+                        result.getInt("id"),
+                        result.getString("nome"),
+                        result.getString("cpf"),
+                        result.getString("email"),
+                        result.getString("situacao").charAt(0)
                 );
                 listE.add(client);
             }
@@ -118,5 +116,20 @@ public class ClientDAO {
         }
         
         return null;
+    }
+    
+    public int getLastId(){
+        try{
+            Statement stm = ConnectionDB.getInstance().getConnection().createStatement();
+            
+            String sql = "";
+            sql = "select MAX(id) from cliente group by id;";
+            ResultSet result = stm.executeQuery(sql);
+            System.out.println("SQL: " + sql);
+            result.next();
+            return result.getInt(1);
+        } catch (Exception e){
+            return 0;
+        }
     }
 }

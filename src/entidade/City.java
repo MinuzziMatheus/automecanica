@@ -5,19 +5,21 @@
  */
 package entidade;
 
+import apoio.ConnectionDB;
+import java.sql.ResultSet;
+import java.sql.Statement;
+
 /**
  *
  * @author minuzzi
  */
 public class City {
     private int id;
-    private String name,
-                   cep;
+    private String name;
     private int state_id;
 
-    public City(String name, String cep, int state_id) {
+    public City(String name, int state_id) {
         this.name = name;
-        this.cep = cep;
         this.state_id = state_id;
     }
 
@@ -37,14 +39,6 @@ public class City {
         this.name = name;
     }
 
-    public String getCep() {
-        return cep;
-    }
-
-    public void setCep(String cep) {
-        this.cep = cep;
-    }
-
     public int getState_id() {
         return state_id;
     }
@@ -53,6 +47,22 @@ public class City {
         this.state_id = state_id;
     }
     
-    
+    public int getLastId(){
+        try{
+            Statement stm = ConnectionDB.getInstance().getConnection().createStatement();
+            
+            String sql = "";
+            
+            sql = "select max(id) from cidade";
+            
+            ResultSet result = stm.executeQuery(sql);
+            
+            System.out.println("SQL: " + sql);
+
+            return result.getInt(1);
+        } catch (Exception e){
+            return 0;
+        }
+    }
     
 }

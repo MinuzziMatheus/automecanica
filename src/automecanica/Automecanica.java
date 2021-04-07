@@ -7,6 +7,8 @@ package automecanica;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import javax.swing.JOptionPane;
+import tela.LoginFrm;
 import tela.MainFrm;
 
 /**
@@ -21,7 +23,7 @@ public class Automecanica {
         if (openConnection()) {
             new MainFrm().setVisible(true);
         } else {
-//            JOptionPane.showMessageDialog(null, "Errrroouuuu");            
+            JOptionPane.showMessageDialog(null, "Não foi possível estabelecer a conexão com o banco. Aguarde e tente novamente mais tarde");            
         }  
     }
     
