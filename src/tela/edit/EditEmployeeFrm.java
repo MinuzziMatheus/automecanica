@@ -6,9 +6,13 @@
 package tela.edit;
 
 import apoio.ComboItem;
+import apoio.Cryptography;
+import dao.CombosDAO;
 import dao.EmployeeDAO;
 import entidade.Employee;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 /**
  *
@@ -19,6 +23,12 @@ public class EditEmployeeFrm extends javax.swing.JDialog {
     /**
      * Creates new form EditEmployeeFrm
      */
+//    private String email,
+//                   name,
+//                   password;
+//    private int functionC;
+    private int id = 0;
+//    private char situationC;
     
     public EditEmployeeFrm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -29,6 +39,25 @@ public class EditEmployeeFrm extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
     }
+    
+    public EditEmployeeFrm(
+            java.awt.Frame parent,
+            boolean modal, 
+            int id,
+            String emailField,
+            String nameField,
+            int functionID,
+            char situationCombo) {
+        super(parent, modal);
+        initComponents();
+        new CombosDAO().popularCombo("cargo", functionCombo);
+        this.id = id;
+        this.emailField.setText(emailField);
+        this.nameField.setText(nameField);
+        this.functionCombo.setSelectedIndex(functionID);
+        this.situationCombo.setSelectedItem(situationCombo);
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -44,11 +73,13 @@ public class EditEmployeeFrm extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         emailField = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        passwordField = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         functionCombo = new javax.swing.JComboBox<>();
         saveBtn = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        situationCombo = new javax.swing.JComboBox<>();
+        passwordField = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -82,18 +113,18 @@ public class EditEmployeeFrm extends javax.swing.JDialog {
             }
         });
 
+        jLabel2.setText("Situação:");
+
+        situationCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "I" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(97, 97, 97)
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(26, Short.MAX_VALUE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -109,8 +140,17 @@ public class EditEmployeeFrm extends javax.swing.JDialog {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(functionCombo, 0, 212, Short.MAX_VALUE)
-                                    .addComponent(passwordField)
-                                    .addComponent(emailField))))))
+                                    .addComponent(emailField)
+                                    .addComponent(passwordField)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(97, 97, 97)
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(situationCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -128,13 +168,17 @@ public class EditEmployeeFrm extends javax.swing.JDialog {
                     .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
+                    .addComponent(jLabel5)
+                    .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(functionCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 53, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(situationCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addComponent(saveBtn)
                 .addContainerGap())
         );
@@ -153,12 +197,13 @@ public class EditEmployeeFrm extends javax.swing.JDialog {
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
         EmployeeDAO employeeDao = new EmployeeDAO();
         Employee employee = new Employee(
+                id,
                 emailField.getText(), 
                 nameField.getText(), 
-                passwordField.getText(), 
-                'a',
+                Cryptography.criptografar(new String(passwordField.getPassword())), 
+                situationCombo.getSelectedItem().toString().charAt(0),
                 ((ComboItem) functionCombo.getSelectedItem()).getCodigo());
-
+        
         String result = employeeDao.employeeEdit(employee);
         
         if(Integer.parseInt(result) > 0){
@@ -214,12 +259,14 @@ public class EditEmployeeFrm extends javax.swing.JDialog {
     private javax.swing.JTextField emailField;
     private javax.swing.JComboBox<String> functionCombo;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JTextField nameField;
-    private javax.swing.JTextField passwordField;
+    private javax.swing.JPasswordField passwordField;
     private javax.swing.JButton saveBtn;
+    private javax.swing.JComboBox<String> situationCombo;
     // End of variables declaration//GEN-END:variables
 }

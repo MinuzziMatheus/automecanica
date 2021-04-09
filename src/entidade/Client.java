@@ -18,21 +18,20 @@ public class Client {
     private String name,
                    cpf,
                    email;
-    private char situation;
+//    private char situation;
 
-    public Client(String name, String cpf, String email, char situation) {
+    public Client(String name, String cpf, String email) {
         this.name = name;
         this.cpf = cpf;
         this.email = email;
-        this.situation = situation;
+//        this.situation = situation;
     }
 
-    public Client(int id, String name, String cpf, String email, char situation) {
+    public Client(int id, String name, String cpf, String email) {
         this.id = id;
         this.name = name;
         this.cpf = cpf;
         this.email = email;
-        this.situation = situation;
     }
     
     
@@ -67,16 +66,5 @@ public class Client {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public char getSituation() {
-        return situation;
-    }
-
-    public void setSituation(char situation) {
-        this.situation = situation;
-    }
-
-
-    
+    }    
 }

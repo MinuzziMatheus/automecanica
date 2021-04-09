@@ -26,9 +26,9 @@ public class LoginFrm extends javax.swing.JFrame {
     public LoginFrm() {
         initComponents();
         Color backgroundColor = new Color(41,41,46);
-        Color letherColor = new Color(255,255,255);
-        Color titleColor = new Color(97,218,251);
-        Color detailColor = new Color(235,164,23);
+//        Color letherColor = new Color(255,255,255);
+//        Color titleColor = new Color(97,218,251);
+//        Color detailColor = new Color(235,164,23);
         this.getContentPane().setBackground( backgroundColor );
     }
 
@@ -43,13 +43,16 @@ public class LoginFrm extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         emailField = new javax.swing.JTextField();
-        passwordField = new javax.swing.JTextField();
         helpTxt1 = new javax.swing.JLabel();
         helpTxt2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        passwordField = new javax.swing.JPasswordField();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setAlwaysOnTop(true);
 
         jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 17)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(235, 164, 23));
@@ -57,11 +60,6 @@ public class LoginFrm extends javax.swing.JFrame {
 
         emailField.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         emailField.setForeground(new java.awt.Color(235, 164, 23));
-        emailField.setText("Email");
-
-        passwordField.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
-        passwordField.setForeground(new java.awt.Color(235, 164, 23));
-        passwordField.setText("Senha");
 
         helpTxt1.setFont(new java.awt.Font("Ubuntu", 0, 8)); // NOI18N
         helpTxt1.setForeground(new java.awt.Color(235, 164, 23));
@@ -72,6 +70,7 @@ public class LoginFrm extends javax.swing.JFrame {
         helpTxt2.setText("Entre em contato com a equipe: (51) 0000-0000");
 
         jButton1.setBackground(new java.awt.Color(97, 218, 251));
+        jButton1.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Login");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -89,6 +88,17 @@ public class LoginFrm extends javax.swing.JFrame {
             }
         });
 
+        passwordField.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        passwordField.setForeground(new java.awt.Color(235, 164, 23));
+
+        jLabel3.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(235, 164, 23));
+        jLabel3.setText("Email");
+
+        jLabel4.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(235, 164, 23));
+        jLabel4.setText("Senha");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -97,9 +107,7 @@ public class LoginFrm extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(passwordField)
-                            .addComponent(emailField))
+                        .addComponent(emailField)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
@@ -107,12 +115,8 @@ public class LoginFrm extends javax.swing.JFrame {
                             .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addGap(37, 37, 37)
-                                .addComponent(jLabel2)
-                                .addGap(109, 109, 109))))))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(37, 37, 37)
-                .addComponent(helpTxt2)
-                .addGap(0, 43, Short.MAX_VALUE))
+                                .addComponent(jLabel2)))
+                        .addGap(62, 62, 62))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -122,17 +126,35 @@ public class LoginFrm extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(81, 81, 81))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addComponent(helpTxt2)
+                .addGap(0, 43, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(passwordField)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(32, 32, 32)
                 .addComponent(jLabel1)
-                .addGap(29, 29, 29)
+                .addGap(15, 15, 15)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(7, 7, 7)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
@@ -151,7 +173,7 @@ public class LoginFrm extends javax.swing.JFrame {
             Statement stm = ConnectionDB.getInstance().getConnection().createStatement();
             
             String login = emailField.getText();
-            String password = Cryptography.criptografar(passwordField.getText());
+            String password = Cryptography.criptografar(new String(passwordField.getPassword()));
             String sql = "select * from funcionario where email = '" + login + "' and senha = '" + password + "';";
             
             ResultSet result = null;
@@ -161,6 +183,7 @@ public class LoginFrm extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Erro ao logar, verifique seu login ou senha.");
             }else {
                 new MainFrm().setVisible(true);
+                new LoginFrm().setVisible(false);
             }
         } catch (Exception e){
             JOptionPane.showMessageDialog(null, "Erro ao logar: " + e);
@@ -213,6 +236,8 @@ public class LoginFrm extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JTextField passwordField;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JPasswordField passwordField;
     // End of variables declaration//GEN-END:variables
 }

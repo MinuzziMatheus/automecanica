@@ -10,25 +10,28 @@ package entidade;
  * @author minuzzi
  */
 public class Item {
-    private int id;
+    private int id,
+            amount;
     private String name,
                    description;
     private double value;
     private char situation;
 
-    public Item(String name, String description, double value, char situation) {
+    public Item(String name, String description, double value, char situation, int amount) {
         this.name = name;
         this.description = description;
         this.value = value;
         this.situation = situation;
+        this.amount = amount;
     }
 
-    public Item(int id, String name, String description, double value, char situation) {
+    public Item(int id, String name, String description, double value, char situation, int amount) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.value = value;
         this.situation = situation;
+        this.amount = amount;
     }
     
     
@@ -72,6 +75,16 @@ public class Item {
     public void setSituation(char situation) {
         this.situation = situation;
     }
+
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+    
+    
     
     
 }

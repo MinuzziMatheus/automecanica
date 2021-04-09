@@ -79,7 +79,7 @@ public class EmployeeDAO {
             Statement stm = ConnectionDB.getInstance().getConnection().createStatement();
             
             String sql = "update funcionario "
-                        + "set descricao = '" + employee.getName() + "', "
+                        + "set nome = '" + employee.getName() + "', "
                         + "senha = '" + employee.getPassword() + "', "
                         + "cargo_id = '" + employee.getFunction_id() + "', "
                         + "email = '" + employee.getEmail() + "', "
@@ -96,6 +96,33 @@ public class EmployeeDAO {
         } catch (Exception e) {
             System.out.println("Erro ao salvar: " + e);
             return e.toString();
+        }
+    }
+    
+    public Employee returnEmployee(int id){
+        try {
+            Statement stm = ConnectionDB.getInstance().getConnection().createStatement();
+            
+            String sql = "select * from funcionario where id = '" + id + "';";
+            
+            ResultSet result = stm.executeQuery(sql);
+            
+            System.out.println("SQL: " + sql);
+            result.next();
+            Employee employee = new Employee(
+                        result.getInt("id"),
+                        result.getString("nome"),
+                        result.getString("email"),
+                        result.getString("senha"),
+                        result.getString("situacao").charAt(0),
+                        result.getInt("cargo_id")
+                        
+            );
+            
+            return employee;
+        } catch (Exception e) {
+            System.out.println("Erro ao encontrar: " + e);
+            return null;
         }
     }
     

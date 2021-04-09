@@ -27,8 +27,7 @@ public class ClientDAO {
                     + "(default,"
                     + " '" + client.getName() + "',"
                     + " '" + client.getCpf() + "',"
-                    + " '" + client.getEmail() + "',"
-                    + " 'a')";
+                    + " '" + client.getEmail() + "')";
             
             int result = stm.executeUpdate(sql);
 
@@ -43,26 +42,26 @@ public class ClientDAO {
         }
     }
 //    
-    public String clientInactivation(int id){
-        try {
-            Statement stm = ConnectionDB.getInstance().getConnection().createStatement();
-            
-            String sql = "update cliente "
-                    + "set situacao = 'i' "
-                    + "where id = " + id;
-
-            System.out.println("SQL: " + sql);
-            
-            int result = stm.executeUpdate(sql);
-            
-            String feedBackMessage = ""+result+"";
-            
-            return feedBackMessage;
-        } catch (Exception e) {
-            System.out.println("Erro ao excluir/inativar cliente: " + e);
-            return e.toString();
-        }
-    }
+//    public String clientInactivation(int id){
+//        try {
+//            Statement stm = ConnectionDB.getInstance().getConnection().createStatement();
+//            
+//            String sql = "update cliente "
+//                    + "set situacao = 'i' "
+//                    + "where id = " + id;
+//
+//            System.out.println("SQL: " + sql);
+//            
+//            int result = stm.executeUpdate(sql);
+//            
+//            String feedBackMessage = ""+result+"";
+//            
+//            return feedBackMessage;
+//        } catch (Exception e) {
+//            System.out.println("Erro ao excluir/inativar cliente: " + e);
+//            return e.toString();
+//        }
+//    }
     
     public String clientEdit(Client client){
         try {
@@ -71,20 +70,40 @@ public class ClientDAO {
             String sql = "update cliente "
                         + "set nome = '" + client.getName() + "', "
                         + "cpf = '" + client.getCpf()+ "', "
-                        + "email = '" + client.getEmail() + "', "
-                        + "situacao = '" + client.getSituation() + "', "
+                        + "email = '" + client.getEmail() + "' "
                         + "where id = " + client.getId() + ";";
             
             int result = stm.executeUpdate(sql);
-            
-            System.out.println("SQL: " + sql);
 
             String feedBackMessage = ""+result+"";
             
             return feedBackMessage;
         } catch (Exception e) {
-            System.out.println("Erro ao salvar: " + e);
+            System.out.println("Erro ao atualizar cliente: " + e);
             return e.toString();
+        }
+    }
+    
+    public Client returnClient(int id){
+        try {
+            Statement stm = ConnectionDB.getInstance().getConnection().createStatement();
+            
+            String sql = "select * from cliente where id = " + id + ";";
+            
+            ResultSet result = stm.executeQuery(sql);
+            
+            System.out.println("SQL: " + sql);
+            result.next();
+            Client client = new Client(
+                        result.getInt("id"),
+                        result.getString("nome"),
+                        result.getString("cpf"),
+                        result.getString("email")
+            );
+            return client;
+        } catch (Exception e) {
+            System.out.println("Erro ao encontrar: " + e);
+            return null;
         }
     }
     
@@ -103,9 +122,7 @@ public class ClientDAO {
                         result.getInt("id"),
                         result.getString("nome"),
                         result.getString("cpf"),
-                        result.getString("email"),
-                        result.getString("situacao").charAt(0)
-                );
+                        result.getString("email"));
                 listE.add(client);
             }
             

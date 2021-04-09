@@ -23,13 +23,13 @@ public class ItemDAO {
             
             String sql = "";
             
-            sql = "Insert into funcionario values "
+            sql = "Insert into item values "
                     + "(default,"
-                    + " '" + item.getName() + "',"
                     + " '" + item.getName() + "',"
                     + " '" + item.getDescription() + "',"
                     + " '" + item.getValue() + "',"
-                    + " 'a');"; 
+                    + " 'a' ,"
+                    + " '" + item.getAmount() + "');"; 
             
             int result = stm.executeUpdate(sql);
             
@@ -69,10 +69,11 @@ public class ItemDAO {
         try {
             Statement stm = ConnectionDB.getInstance().getConnection().createStatement();
             
-            String sql = "update funcionario "
+            String sql = "update item "
                         + "set nome = '" + item.getName() + "', "
                         + "descricao = '" + item.getDescription() + "', "
                         + "valor = '" + item.getValue() + "', "
+                        + "quantidade = '" + item.getAmount() + "', "
                         + "situacao = '" + item.getSituation() + "'"
                         + "where id = " + item.getId() + ";";
             
@@ -105,7 +106,8 @@ public class ItemDAO {
                         result.getString("nome"),
                         result.getString("descricao"),
                         result.getDouble("valor"),
-                        result.getString("situacao").charAt(0)
+                        result.getString("situacao").charAt(0),
+                        result.getInt("quantidade")
                         
                 );
                 listE.add(item);

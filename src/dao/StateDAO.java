@@ -7,6 +7,8 @@ package dao;
 
 import apoio.ConnectionDB;
 import entidade.State;
+import entidade.State;
+import java.sql.ResultSet;
 import java.sql.Statement;
 
 /**
@@ -34,6 +36,28 @@ public class StateDAO {
         } catch (Exception e) {
             System.out.println("Erro ao salvar um estado: " + e);
             return e.toString();
+        }
+    }
+    
+    public State returnState(int id){
+        try {
+            Statement stm = ConnectionDB.getInstance().getConnection().createStatement();
+            
+            String sql = "select * from estado where id = " + id + ";";
+            
+            ResultSet result = stm.executeQuery(sql);
+            
+            System.out.println("SQL: " + sql);
+            result.next();
+            State state = new State(
+                        result.getInt("id"),
+                        result.getString("uf"),
+                        result.getString("nome")                        
+            );
+            return state;
+        } catch (Exception e) {
+            System.out.println("Erro ao encontrar: " + e);
+            return null;
         }
     }
 }

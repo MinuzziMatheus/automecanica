@@ -25,6 +25,17 @@ public class Address {
         this.city_id = city_id;
     }
 
+    public Address(int id, String street, String number, String neighborhood, int client_id, int city_id) {
+        this.id = id;
+        this.street = street;
+        this.number = number;
+        this.neighborhood = neighborhood;
+        this.client_id = client_id;
+        this.city_id = city_id;
+    }
+    
+    
+
     public int getId() {
         return id;
     }

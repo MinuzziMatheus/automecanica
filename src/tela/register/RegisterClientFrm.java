@@ -219,11 +219,10 @@ public class RegisterClientFrm extends javax.swing.JDialog {
         Client client = new Client(
             nameField.getText(),
             cpfField.getText(),
-            emailField.getText(),
-            'a');
+            emailField.getText());
         String resultClient = clientDAO.clientRegister(client);
         int insertedClientId = clientDAO.getLastId();
-        
+            
 //      -----------------ADDRESS--------------------        
         AddressDAO addressDAO = new AddressDAO();
         Address address = new Address(
@@ -234,8 +233,10 @@ public class RegisterClientFrm extends javax.swing.JDialog {
                 cityCombo.getSelectedIndex()
         );
         
+        String resultAddress = addressDAO.createAddress(address);
         
-        if(Integer.parseInt(resultClient) > 0){
+        String finalResut = resultAddress + resultClient;
+        if(Integer.parseInt(finalResut) > 0){
             JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
         } else {
             JOptionPane.showMessageDialog(null, "Erro ao cadastrar usuário.");

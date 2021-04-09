@@ -18,6 +18,14 @@ public class State {
     private String nome;
     private String uf;
 
+    public State(int id, String nome, String uf) {
+        this.id = id;
+        this.nome = nome;
+        this.uf = uf;
+    }
+
+    
+    
     public int getId() {
         return id;
     }

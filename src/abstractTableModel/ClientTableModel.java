@@ -17,7 +17,7 @@ import javax.swing.table.AbstractTableModel;
  */
 public class ClientTableModel extends AbstractTableModel {
     private List<Client> dados = new ArrayList<>();
-    private String[] colunas = {"Id", "Nome", "CPF", "E-mail", "Situação"};
+    private String[] colunas = {"Id", "Nome", "CPF", "E-mail"};
 
     public ClientTableModel() {
         updateData();
@@ -49,8 +49,6 @@ public class ClientTableModel extends AbstractTableModel {
                 return dados.get(linha).getCpf();
             case 3:
                 return dados.get(linha).getEmail();
-            case 4:
-                return dados.get(linha).getSituation();
         }
 
         return null;
@@ -85,9 +83,6 @@ public class ClientTableModel extends AbstractTableModel {
                 break;
             case 3:
                 dados.get(linha).setEmail(((String) valor));//valor que vem do Text Field é sempre uma String
-                break;
-            case 4:
-                dados.get(linha).setSituation(((String) valor).charAt(0));//valor que vem do Text Field é sempre uma String
                 break;
         }
         
