@@ -26,9 +26,6 @@ public class LoginFrm extends javax.swing.JFrame {
     public LoginFrm() {
         initComponents();
         Color backgroundColor = new Color(41,41,46);
-//        Color letherColor = new Color(255,255,255);
-//        Color titleColor = new Color(97,218,251);
-//        Color detailColor = new Color(235,164,23);
         this.getContentPane().setBackground( backgroundColor );
     }
 

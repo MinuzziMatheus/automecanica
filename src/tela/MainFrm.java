@@ -51,8 +51,8 @@ public class MainFrm extends javax.swing.JFrame {
     public MainFrm() {
         initComponents();
         Color backgroundColor = new Color(53,53,53);
-        Color letherColor = new Color(255,255,255);
-        Color detailColor = new Color(235,164,23);
+        Color textColor = new Color(255,255,255);
+//        Color detailColor = new Color(235,164,23);
         Color btnColor = new Color (97,218,251);
         
         
@@ -60,23 +60,23 @@ public class MainFrm extends javax.swing.JFrame {
         this.jPanel1.setBackground( backgroundColor );
         this.jPanel2.setBackground( backgroundColor );
         this.EmployeeFunctionBtn.setBackground( btnColor );
-        this.EmployeeFunctionBtn.setForeground( letherColor );
+        this.EmployeeFunctionBtn.setForeground( textColor );
         this.clientBtn.setBackground( btnColor );
-        this.clientBtn.setForeground( letherColor );
+        this.clientBtn.setForeground( textColor );
         this.employeeBtn.setBackground( btnColor );
-        this.employeeBtn.setForeground( letherColor );
+        this.employeeBtn.setForeground( textColor );
         this.itenBtn.setBackground( btnColor );
-        this.itenBtn.setForeground( letherColor );
+        this.itenBtn.setForeground( textColor );
         this.soBtn.setBackground( btnColor );
-        this.soBtn.setForeground( letherColor );
+        this.soBtn.setForeground( textColor );
         this.editBtn.setBackground( btnColor );
-        this.editBtn.setForeground( letherColor );
+        this.editBtn.setForeground( textColor );
         this.searchBtn.setBackground( btnColor );
-        this.searchBtn.setForeground( letherColor );
+        this.searchBtn.setForeground( textColor );
         this.searchField.setBackground( backgroundColor );
-        this.searchField.setForeground( letherColor );
+        this.searchField.setForeground( textColor );
         this.tblMain.setBackground( backgroundColor );
-        this.tblMain.setForeground( letherColor );
+        this.tblMain.setForeground( textColor );
         
         CombosDAO comboDao = new CombosDAO();
         tblMain.setModel(employeeTableModel);
