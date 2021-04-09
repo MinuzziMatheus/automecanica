@@ -5,11 +5,14 @@
  */
 package tela.edit;
 import apoio.ComboItem;
+import apoio.Formatacao;
+import apoio.Validacao;
 import dao.AddressDAO;
 import dao.ClientDAO;
 import dao.CombosDAO;
 import entidade.Address;
 import entidade.Client;
+import java.util.stream.IntStream;
 import javax.swing.JOptionPane;
 
 /**
@@ -17,7 +20,6 @@ import javax.swing.JOptionPane;
  * @author minuzzi
  */
 public class EditClientFrm extends javax.swing.JDialog {
-        
     CombosDAO combosDAO = new CombosDAO();
     private int id, idCity, idUf, idAddress = 0;
     
@@ -54,6 +56,7 @@ public class EditClientFrm extends javax.swing.JDialog {
         this.numberField.setText(numberField);
         this.ufCombo.setSelectedItem(ufCombo);
         this.cityCombo.setSelectedItem(cityCombo);
+        
     }
 
     /**
@@ -76,13 +79,13 @@ public class EditClientFrm extends javax.swing.JDialog {
         jLabel7 = new javax.swing.JLabel();
         nameField = new javax.swing.JTextField();
         emailField = new javax.swing.JTextField();
-        cpfField = new javax.swing.JTextField();
         streetField = new javax.swing.JTextField();
         neighborhoodField = new javax.swing.JTextField();
         numberField = new javax.swing.JTextField();
         saveBtn = new javax.swing.JButton();
         ufCombo = new javax.swing.JComboBox<>();
         cityCombo = new javax.swing.JComboBox<>();
+        cpfField = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -117,6 +120,12 @@ public class EditClientFrm extends javax.swing.JDialog {
             }
         });
 
+        try {
+            cpfField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -135,7 +144,6 @@ public class EditClientFrm extends javax.swing.JDialog {
                                     .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(cpfField)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(numberField, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(49, 49, 49)
@@ -143,7 +151,8 @@ public class EditClientFrm extends javax.swing.JDialog {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(ufCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addComponent(streetField)
-                                    .addComponent(neighborhoodField)))
+                                    .addComponent(neighborhoodField)
+                                    .addComponent(cpfField)))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addGap(18, 18, 18)
@@ -182,8 +191,8 @@ public class EditClientFrm extends javax.swing.JDialog {
                     .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cpfField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
+                    .addComponent(jLabel6)
+                    .addComponent(cpfField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(streetField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -211,33 +220,53 @@ public class EditClientFrm extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
-       ClientDAO clientDAO = new ClientDAO();
+        int verifyNullName = nameField.getText().length();
+        int verifyNullEmail = emailField.getText().length();
+        int verifyNullStreet = streetField.getText().length();
+        int verifyNullNumber = numberField.getText().length();
+        int verifyNullNeigh = neighborhoodField.getText().length();
+        int verifyNullCity = cityCombo.getSelectedIndex();
+        int verifyNullUF = ufCombo.getSelectedIndex();
         
-        Client client = new Client(
-            id,
-            nameField.getText(),
-            cpfField.getText(),
-            emailField.getText());
-        String resultClient = clientDAO.clientEdit(client);
-        
-//      -----------------ADDRESS--------------------        
-        AddressDAO addressDAO = new AddressDAO();
-        Address address = new Address(
-                idAddress,
-                streetField.getText(),
-                numberField.getText(),
-                neighborhoodField.getText(),
+        if(verifyNullName > 5 &&
+            Validacao.validarCPF(Formatacao.removerFormatacao(cpfField.getText())) &&
+            verifyNullEmail > 10 &&
+            verifyNullStreet > 5 &&
+            verifyNullNumber > 1 &&
+            verifyNullNeigh > 4 &
+            verifyNullCity > 0 &&
+            verifyNullUF > 0){
+            ClientDAO clientDAO = new ClientDAO();
+
+            Client client = new Client(
                 id,
-                cityCombo.getSelectedIndex()
-        );
-        String resultAddress = addressDAO.editAddress(address);
-        
-        String finalResut = resultAddress + resultClient;
-        if(Integer.parseInt(finalResut) > 0){
-            JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
+                nameField.getText(),
+                cpfField.getText(),
+                emailField.getText());
+            String resultClient = clientDAO.clientEdit(client);
+
+    //      -----------------ADDRESS--------------------        
+            AddressDAO addressDAO = new AddressDAO();
+            Address address = new Address(
+                    idAddress,
+                    streetField.getText(),
+                    numberField.getText(),
+                    neighborhoodField.getText(),
+                    id,
+                    cityCombo.getSelectedIndex()
+            );
+            String resultAddress = addressDAO.editAddress(address);
+
+            String finalResut = resultAddress + resultClient;
+            if(Integer.parseInt(finalResut) > 0){
+                JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro ao cadastrar usuário.");
+            }
         } else {
-            JOptionPane.showMessageDialog(null, "Erro ao cadastrar usuário.");
+            JOptionPane.showMessageDialog(null, "Você precisa informar todos os campos.");
         }
+        
     }//GEN-LAST:event_saveBtnActionPerformed
 
     private void ufComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_ufComboItemStateChanged
@@ -291,7 +320,7 @@ public class EditClientFrm extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cityCombo;
-    private javax.swing.JTextField cpfField;
+    private javax.swing.JFormattedTextField cpfField;
     private javax.swing.JTextField emailField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

@@ -7,6 +7,8 @@ package tela.register;
 
 import apoio.ComboItem;
 import apoio.Cryptography;
+import apoio.Formatacao;
+import apoio.Validacao;
 import dao.AddressDAO;
 import dao.CityDAO;
 import dao.ClientDAO;
@@ -49,7 +51,6 @@ public class RegisterClientFrm extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         emailField = new javax.swing.JTextField();
         saveBtn = new javax.swing.JButton();
-        cpfField = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         streetField = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
@@ -61,6 +62,7 @@ public class RegisterClientFrm extends javax.swing.JDialog {
         neighborhoodField = new javax.swing.JTextField();
         ufCombo = new javax.swing.JComboBox<>();
         cityCombo = new javax.swing.JComboBox<>();
+        cpfField = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -101,6 +103,12 @@ public class RegisterClientFrm extends javax.swing.JDialog {
                 ufComboItemStateChanged(evt);
             }
         });
+
+        try {
+            cpfField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -147,8 +155,7 @@ public class RegisterClientFrm extends javax.swing.JDialog {
                                         .addComponent(ufCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(streetField, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(neighborhoodField, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(cpfField))))
+                                        .addComponent(neighborhoodField, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3)
@@ -158,7 +165,9 @@ public class RegisterClientFrm extends javax.swing.JDialog {
                                     .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(1, 1, 1)
-                                        .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(cpfField)
+                                            .addComponent(emailField, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE))))))
                         .addGap(29, 29, 29))))
         );
 
@@ -179,8 +188,8 @@ public class RegisterClientFrm extends javax.swing.JDialog {
                     .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cpfField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
+                    .addComponent(jLabel6)
+                    .addComponent(cpfField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(streetField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -204,7 +213,7 @@ public class RegisterClientFrm extends javax.swing.JDialog {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {cpfField, emailField, nameField, streetField});
+        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {emailField, nameField, streetField});
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -215,31 +224,49 @@ public class RegisterClientFrm extends javax.swing.JDialog {
 
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
         ClientDAO clientDAO = new ClientDAO();
-        
-        Client client = new Client(
-            nameField.getText(),
-            cpfField.getText(),
-            emailField.getText());
-        String resultClient = clientDAO.clientRegister(client);
-        int insertedClientId = clientDAO.getLastId();
-            
-//      -----------------ADDRESS--------------------        
-        AddressDAO addressDAO = new AddressDAO();
-        Address address = new Address(
-                streetField.getText(),
-                numberField.getText(),
-                neighborhoodField.getText(),
-                insertedClientId,
-                cityCombo.getSelectedIndex()
-        );
-        
-        String resultAddress = addressDAO.createAddress(address);
-        
-        String finalResut = resultAddress + resultClient;
-        if(Integer.parseInt(finalResut) > 0){
-            JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
+        int verifyNullName = nameField.getText().length();
+        int verifyNullEmail = emailField.getText().length();
+        int verifyNullStreet = streetField.getText().length();
+        int verifyNullNumber = numberField.getText().length();
+        int verifyNullNeigh = neighborhoodField.getText().length();
+        int verifyNullCity = cityCombo.getSelectedIndex();
+        int verifyNullUF = ufCombo.getSelectedIndex();
+       
+        if (verifyNullName > 5 &&
+            Validacao.validarCPF(Formatacao.removerFormatacao(cpfField.getText())) &&
+            verifyNullEmail > 10 &&
+            verifyNullStreet > 5 &&
+            verifyNullNumber > 1 &&
+            verifyNullNeigh > 4 &
+            verifyNullCity > 0 &&
+            verifyNullUF > 0) {
+            Client client = new Client(
+                nameField.getText(),
+                cpfField.getText(),
+                emailField.getText());
+            String resultClient = clientDAO.clientRegister(client);
+            int insertedClientId = clientDAO.getLastId();
+
+    //      -----------------ADDRESS--------------------        
+            AddressDAO addressDAO = new AddressDAO();
+            Address address = new Address(
+                    streetField.getText(),
+                    numberField.getText(),
+                    neighborhoodField.getText(),
+                    insertedClientId,
+                    cityCombo.getSelectedIndex()
+            );
+
+            String resultAddress = addressDAO.createAddress(address);
+
+            String finalResut = resultAddress + resultClient;
+            if(Integer.parseInt(finalResut) > 0){
+                JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro ao cadastrar usuário.");
+            }
         } else {
-            JOptionPane.showMessageDialog(null, "Erro ao cadastrar usuário.");
+            JOptionPane.showMessageDialog(null, "Preencha todos os campos corretamente.");
         }
     }//GEN-LAST:event_saveBtnActionPerformed
 
@@ -294,7 +321,7 @@ public class RegisterClientFrm extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cityCombo;
-    private javax.swing.JTextField cpfField;
+    private javax.swing.JFormattedTextField cpfField;
     private javax.swing.JTextField emailField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
