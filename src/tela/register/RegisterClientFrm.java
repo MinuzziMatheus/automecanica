@@ -8,7 +8,7 @@ package tela.register;
 import apoio.ComboItem;
 import apoio.Cryptography;
 import apoio.Formatacao;
-import apoio.Validacao;
+import apoio.Validation;
 import dao.AddressDAO;
 import dao.CityDAO;
 import dao.ClientDAO;
@@ -18,6 +18,7 @@ import entidade.Address;
 import entidade.City;
 import entidade.Client;
 import entidade.State;
+import java.awt.Color;
 import javax.swing.JOptionPane;
 
 /**
@@ -33,6 +34,15 @@ public class RegisterClientFrm extends javax.swing.JDialog {
     public RegisterClientFrm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        Color backgroundColor = new Color(53,53,53);
+        Color textColor = new Color(255,255,255);
+//        Color detailColor = new Color(235,164,23);
+        Color btnColor = new Color (97,218,251);
+        
+        this.getContentPane().setBackground( backgroundColor );
+        this.saveBtn.setBackground( btnColor );
+        this.saveBtn.setForeground( textColor );
+        
         combosDAO.popularCombo("estado", ufCombo);
     }
 
@@ -57,8 +67,8 @@ public class RegisterClientFrm extends javax.swing.JDialog {
         jLabel9 = new javax.swing.JLabel();
         numberField = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
         neighborhoodField = new javax.swing.JTextField();
         ufCombo = new javax.swing.JComboBox<>();
         cityCombo = new javax.swing.JComboBox<>();
@@ -66,8 +76,12 @@ public class RegisterClientFrm extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 17)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(235, 164, 23));
         jLabel1.setText("Cadastro de cliente:");
 
+        jLabel2.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Nome:");
 
         nameField.setToolTipText("");
@@ -77,8 +91,11 @@ public class RegisterClientFrm extends javax.swing.JDialog {
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Email:");
 
+        saveBtn.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         saveBtn.setText("Salvar");
         saveBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -86,17 +103,29 @@ public class RegisterClientFrm extends javax.swing.JDialog {
             }
         });
 
+        jLabel6.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("CPF:");
 
+        jLabel8.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setText("Número:");
 
+        jLabel9.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("Rua:");
 
+        jLabel10.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setText("Cidade:");
 
-        jLabel7.setText("UF:");
-
+        jLabel4.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Bairro:");
+
+        jLabel7.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("UF:");
 
         ufCombo.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -129,11 +158,10 @@ public class RegisterClientFrm extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8)
-                            .addComponent(jLabel10))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(numberField, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cityCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addGap(18, 18, 18)
+                                .addComponent(cityCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -148,8 +176,11 @@ public class RegisterClientFrm extends javax.swing.JDialog {
                                         .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
                                         .addGap(10, 10, 10)))
                                 .addGap(1, 1, 1)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addGroup(layout.createSequentialGroup()
+                                        .addGap(1, 1, 1)
+                                        .addComponent(numberField, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
                                         .addComponent(ufCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -231,9 +262,9 @@ public class RegisterClientFrm extends javax.swing.JDialog {
         int verifyNullNeigh = neighborhoodField.getText().length();
         int verifyNullCity = cityCombo.getSelectedIndex();
         int verifyNullUF = ufCombo.getSelectedIndex();
-       
+        
         if (verifyNullName > 5 &&
-            Validacao.validarCPF(Formatacao.removerFormatacao(cpfField.getText())) &&
+            Validation.isCPF(Formatacao.removerFormatacao(cpfField.getText())) &&
             verifyNullEmail > 10 &&
             verifyNullStreet > 5 &&
             verifyNullNumber > 1 &&
@@ -246,7 +277,6 @@ public class RegisterClientFrm extends javax.swing.JDialog {
                 emailField.getText());
             String resultClient = clientDAO.clientRegister(client);
             int insertedClientId = clientDAO.getLastId();
-
     //      -----------------ADDRESS--------------------        
             AddressDAO addressDAO = new AddressDAO();
             Address address = new Address(
@@ -262,6 +292,7 @@ public class RegisterClientFrm extends javax.swing.JDialog {
             String finalResut = resultAddress + resultClient;
             if(Integer.parseInt(finalResut) > 0){
                 JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
+                dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "Erro ao cadastrar usuário.");
             }

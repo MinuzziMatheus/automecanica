@@ -52,7 +52,7 @@ public class MainFrm extends javax.swing.JFrame {
         initComponents();
         Color backgroundColor = new Color(53,53,53);
         Color textColor = new Color(255,255,255);
-//        Color detailColor = new Color(235,164,23);
+        Color detailColor = new Color(235,164,23);
         Color btnColor = new Color (97,218,251);
         
         
@@ -380,11 +380,10 @@ public class MainFrm extends javax.swing.JFrame {
     }//GEN-LAST:event_itenBtnActionPerformed
 
     private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
-        
+        int position = (int)(tblMain.getValueAt(tblMain.getSelectedRow(), 0));
         if(tblMain.getSelectedRow() != -1){
-            int position = (int)(tblMain.getValueAt(tblMain.getSelectedRow(), 0));
-            if(categoryCombo.getSelectedIndex() == 0){
             
+            if(categoryCombo.getSelectedIndex() == 0){
             EmployeeDAO employeeDao = new EmployeeDAO();
             Employee employee = employeeDao.returnEmployee(position);        
             new EditEmployeeFrm(this, true,
@@ -393,15 +392,14 @@ public class MainFrm extends javax.swing.JFrame {
                     employee.getName(),
                     employee.getFunction_id(),
                     employee.getSituation()).setVisible(true);
+            
             } else if (categoryCombo.getSelectedIndex() == 1){
-
                 ClientDAO clientDao = new ClientDAO();
                 Client client = clientDao.returnClient(position);
 
                 AddressDAO addressDao = new AddressDAO();
                 Address  address = addressDao.returnAddress(position);
     //            Address addressId = addressDao.returnAddressId();
-
 
                 CityDAO cityDao = new CityDAO();
                 City  city = cityDao.returnCity(position);

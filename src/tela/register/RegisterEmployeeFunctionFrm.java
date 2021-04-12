@@ -7,6 +7,7 @@ package tela.register;
 
 import dao.EmployeeFunctionDAO;
 import entidade.EmployeeFunction;
+import java.awt.Color;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,6 +22,17 @@ public class RegisterEmployeeFunctionFrm extends javax.swing.JDialog {
     public RegisterEmployeeFunctionFrm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        Color backgroundColor = new Color(53,53,53);
+        Color textColor = new Color(255,255,255);
+        Color detailColor = new Color(235,164,23);
+        Color btnColor = new Color (97,218,251);
+        
+        this.getContentPane().setBackground( backgroundColor );
+        this.nameField.setForeground( detailColor );
+        this.salaryField.setForeground( detailColor );
+        this.saveBtn.setBackground( btnColor );
+        this.saveBtn.setForeground( textColor );
+        
     }
 
     /**
@@ -41,8 +53,11 @@ public class RegisterEmployeeFunctionFrm extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 17)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(235, 164, 23));
         jLabel1.setText("Cargo:");
 
+        nameField.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         nameField.setToolTipText("");
         nameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -50,10 +65,17 @@ public class RegisterEmployeeFunctionFrm extends javax.swing.JDialog {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Nome:");
 
+        salaryField.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+
+        jLabel3.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Salário:");
 
+        saveBtn.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         saveBtn.setText("Salvar");
         saveBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -70,15 +92,18 @@ public class RegisterEmployeeFunctionFrm extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(jLabel2))
-                        .addGap(16, 16, 16)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(20, 20, 20))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(18, 18, 18)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(nameField)
                             .addComponent(salaryField))
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 121, Short.MAX_VALUE)
+                        .addGap(0, 114, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel1)
@@ -97,9 +122,9 @@ public class RegisterEmployeeFunctionFrm extends javax.swing.JDialog {
                     .addComponent(jLabel2)
                     .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(salaryField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
                 .addComponent(saveBtn)
                 .addContainerGap())
@@ -122,9 +147,9 @@ public class RegisterEmployeeFunctionFrm extends javax.swing.JDialog {
         String result = employeeFunctionDao.save(employeeFunction);
         
         if(Integer.parseInt(result) > 0){
-            JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
+            JOptionPane.showMessageDialog(null, "Cargo cadastrado com sucesso!");
         } else {
-            JOptionPane.showMessageDialog(null, "Erro ao cadastrar usuário.");
+            JOptionPane.showMessageDialog(null, "Erro ao cadastrar cargo.");
         }
     }//GEN-LAST:event_saveBtnActionPerformed
 

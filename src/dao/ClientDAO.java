@@ -140,7 +140,7 @@ public class ClientDAO {
             Statement stm = ConnectionDB.getInstance().getConnection().createStatement();
             
             String sql = "";
-            sql = "select MAX(id) from cliente group by id;";
+            sql = "select MAX(id) from cliente";
             ResultSet result = stm.executeQuery(sql);
             System.out.println("SQL: " + sql);
             result.next();

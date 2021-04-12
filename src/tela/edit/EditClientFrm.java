@@ -6,7 +6,7 @@
 package tela.edit;
 import apoio.ComboItem;
 import apoio.Formatacao;
-import apoio.Validacao;
+import apoio.Validation;
 import dao.AddressDAO;
 import dao.ClientDAO;
 import dao.CombosDAO;
@@ -229,7 +229,7 @@ public class EditClientFrm extends javax.swing.JDialog {
         int verifyNullUF = ufCombo.getSelectedIndex();
         
         if(verifyNullName > 5 &&
-            Validacao.validarCPF(Formatacao.removerFormatacao(cpfField.getText())) &&
+            Validation.isCPF(Formatacao.removerFormatacao(cpfField.getText())) &&
             verifyNullEmail > 10 &&
             verifyNullStreet > 5 &&
             verifyNullNumber > 1 &&
