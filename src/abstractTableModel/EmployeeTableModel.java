@@ -18,7 +18,7 @@ import javax.swing.table.AbstractTableModel;
 public class EmployeeTableModel extends AbstractTableModel {
 
     private List<Employee> dados = new ArrayList<>();
-    private String[] colunas = {"Id", "Nome", "Email", "Cargo", "Situação"};
+    private String[] colunas = {"Id", "Email", "Nome", "Cargo", "Situação"};
 
     public EmployeeTableModel() {
         updateData();

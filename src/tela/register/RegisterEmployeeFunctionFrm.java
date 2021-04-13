@@ -139,17 +139,25 @@ public class RegisterEmployeeFunctionFrm extends javax.swing.JDialog {
 
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
         EmployeeFunctionDAO employeeFunctionDao = new EmployeeFunctionDAO();
-        EmployeeFunction employeeFunction = 
-                new EmployeeFunction(
-                        nameField.getText(), 
-                        Double.parseDouble(salaryField.getText()));
+        int verifyNullName = nameField.getText().length();
+        double verifyNullSalary = salaryField.getText().length();
         
-        String result = employeeFunctionDao.save(employeeFunction);
-        
-        if(Integer.parseInt(result) > 0){
-            JOptionPane.showMessageDialog(null, "Cargo cadastrado com sucesso!");
-        } else {
-            JOptionPane.showMessageDialog(null, "Erro ao cadastrar cargo.");
+        if(verifyNullName > 5 && verifyNullSalary >= 1){
+            EmployeeFunction employeeFunction = 
+                    new EmployeeFunction(
+                            nameField.getText(), 
+                            Double.parseDouble(salaryField.getText()));
+
+            String result = employeeFunctionDao.save(employeeFunction);
+
+            if(Integer.parseInt(result) > 0){
+                JOptionPane.showMessageDialog(null, "Cargo cadastrado com sucesso!");
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro ao cadastrar cargo.");
+            }
+        }else {
+                JOptionPane.showMessageDialog(null, "Preencha todos os cambos corretamente.");
         }
     }//GEN-LAST:event_saveBtnActionPerformed
 

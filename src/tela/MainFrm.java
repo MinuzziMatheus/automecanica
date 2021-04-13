@@ -9,6 +9,7 @@ import abstractTableModel.ClientTableModel;
 import abstractTableModel.EmployeeTableModel;
 import abstractTableModel.ItemTableModel;
 import dao.AddressDAO;
+import dao.CarDAO;
 import dao.CityDAO;
 import dao.ClientDAO;
 import dao.CombosDAO;
@@ -16,6 +17,7 @@ import dao.EmployeeDAO;
 import dao.EmployeeFunctionDAO;
 import dao.StateDAO;
 import entidade.Address;
+import entidade.Car;
 import entidade.City;
 import entidade.Client;
 import entidade.Employee;
@@ -24,8 +26,12 @@ import entidade.State;
 import java.awt.Color;
 import java.util.HashSet;
 import java.util.Set;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JTabbedPane;
+import javax.swing.SwingConstants;
 import tela.edit.EditClientFrm;
 import tela.edit.EditEmployeeFrm;
 import tela.register.RegisterClientFrm;
@@ -46,8 +52,6 @@ public class MainFrm extends javax.swing.JFrame {
     ClientTableModel clientTableModel = new ClientTableModel();
     ItemTableModel itemTableModel = new ItemTableModel(); 
     
-
-    
     public MainFrm() {
         initComponents();
         Color backgroundColor = new Color(53,53,53);
@@ -57,6 +61,8 @@ public class MainFrm extends javax.swing.JFrame {
         
         
         this.getContentPane().setBackground( backgroundColor );
+        this.categoryCombo.setBackground( backgroundColor );
+        this.categoryCombo.setForeground( detailColor );
         this.jPanel1.setBackground( backgroundColor );
         this.jPanel2.setBackground( backgroundColor );
         this.EmployeeFunctionBtn.setBackground( btnColor );
@@ -81,6 +87,21 @@ public class MainFrm extends javax.swing.JFrame {
         CombosDAO comboDao = new CombosDAO();
         tblMain.setModel(employeeTableModel);
         editBtn.setVisible(true);
+        
+        JLabel lbl = new JLabel("Listagem");
+        JLabel lbl2 = new JLabel("Cadastro");
+        Icon icon = new ImageIcon(getClass().getResource("/assets/list-24.png"));
+        Icon icon2 = new ImageIcon(getClass().getResource("/assets/plus-24.png"));
+        lbl.setIcon(icon);
+        lbl2.setIcon(icon2);
+        
+        lbl.setIconTextGap(5);
+        lbl2.setIconTextGap(5);
+        lbl.setHorizontalTextPosition(SwingConstants.RIGHT);
+        lbl2.setHorizontalTextPosition(SwingConstants.RIGHT);
+
+        this.jTabbedPane1.setTabComponentAt(0, lbl);
+        this.jTabbedPane1.setTabComponentAt(1, lbl2);
     }
 
     /**
@@ -113,11 +134,19 @@ public class MainFrm extends javax.swing.JFrame {
         soBtn = new javax.swing.JButton();
         itenBtn = new javax.swing.JButton();
         EmployeeFunctionBtn = new javax.swing.JButton();
+        toolIcon = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jTabbedPane1.setBorder(null);
         jTabbedPane1.setForeground(new java.awt.Color(53, 53, 53));
+        jTabbedPane1.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTabbedPane1FocusGained(evt);
+            }
+        });
 
         searchBtn.setText("Procurar");
         searchBtn.addActionListener(new java.awt.event.ActionListener() {
@@ -129,6 +158,7 @@ public class MainFrm extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Categoria");
 
+        categoryCombo.setForeground(new java.awt.Color(235, 164, 23));
         categoryCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Funcionário", "Cliente", "item", "Ordem de Serviço" }));
         categoryCombo.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -171,7 +201,7 @@ public class MainFrm extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 573, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 712, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(18, 18, 18)
@@ -265,12 +295,14 @@ public class MainFrm extends javax.swing.JFrame {
             }
         });
 
+        toolIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/assets/job-64.png"))); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(85, Short.MAX_VALUE)
+                .addContainerGap(155, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -293,50 +325,71 @@ public class MainFrm extends javax.swing.JFrame {
                         .addGap(11, 11, 11)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(employeeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(57, 57, 57)
-                        .addComponent(jLabel2)))
-                .addContainerGap(70, Short.MAX_VALUE))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(33, 33, 33)
+                                .addComponent(employeeBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(57, 57, 57)
+                                .addComponent(jLabel2)))
+                        .addGap(0, 127, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(toolIcon)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(22, 22, 22)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel4)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel7))
-                .addGap(2, 2, 2)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(EmployeeFunctionBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
-                    .addComponent(clientBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(employeeBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(30, 30, 30)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(itenBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
-                    .addComponent(soBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE))
-                .addGap(41, 41, 41))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel7))
+                        .addGap(2, 2, 2)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(EmployeeFunctionBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 65, Short.MAX_VALUE)
+                            .addComponent(clientBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(employeeBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(30, 30, 30)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel5))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(itenBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(soBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(57, 57, 57))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(toolIcon)
+                        .addContainerGap())))
         );
 
         jTabbedPane1.addTab("Cadastro", jPanel1);
+
+        jLabel8.setFont(new java.awt.Font("Ubuntu Light", 3, 60)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(97, 218, 251));
+        jLabel8.setText("MinuzziMEC");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(196, 196, 196))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 46, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel8)
+                .addContainerGap(39, Short.MAX_VALUE))
         );
 
         pack();
@@ -406,18 +459,29 @@ public class MainFrm extends javax.swing.JFrame {
 
                 StateDAO stateDao = new StateDAO();
                 State  state = stateDao.returnState(position);
+                
+                CarDAO carDao = new CarDAO();
+                Car car = carDao.returnCar(position);
+                
                 int addressID = address.getId();
                 new EditClientFrm(this, true,
                     (int) tblMain.getValueAt(tblMain.getSelectedRow(), 0),
                         addressID,
                         address.getCity_id(),
-                        state.getId(), 
+                        state.getId(),
+                        car.getId(),
+                        car.getClient_id(),
                         client.getName(), 
                         client.getEmail(), 
                         client.getCpf(), 
                         address.getStreet(),
                         address.getNeighborhood(), 
-                        address.getNumber()).setVisible(true);
+                        address.getNumber(),
+                        car.getName(),
+                        car.getModel(),
+                        car.getYear(),
+                        car.getCarPlate(),
+                        car.getDescription_problem()).setVisible(true);
             } else if (categoryCombo.getSelectedIndex() == 2){
 
             } else if (categoryCombo.getSelectedIndex() == 3){
@@ -429,6 +493,19 @@ public class MainFrm extends javax.swing.JFrame {
 
             
     }//GEN-LAST:event_editBtnActionPerformed
+
+    private void jTabbedPane1FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTabbedPane1FocusGained
+        if(categoryCombo.getSelectedIndex() == 0){
+            EmployeeTableModel etm = (EmployeeTableModel) tblMain.getModel();
+            etm.updateData();
+        } else if(categoryCombo.getSelectedIndex() == 1){
+            ClientTableModel etm = (ClientTableModel) tblMain.getModel();
+            etm.updateData();
+        } else if(categoryCombo.getSelectedIndex() == 2){
+            ItemTableModel etm = (ItemTableModel) tblMain.getModel();
+            etm.updateData();
+        }
+    }//GEN-LAST:event_jTabbedPane1FocusGained
 
     /**
      * @param args the command line arguments
@@ -479,6 +556,7 @@ public class MainFrm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -487,5 +565,6 @@ public class MainFrm extends javax.swing.JFrame {
     private javax.swing.JTextField searchField;
     private javax.swing.JButton soBtn;
     private javax.swing.JTable tblMain;
+    private javax.swing.JLabel toolIcon;
     // End of variables declaration//GEN-END:variables
 }

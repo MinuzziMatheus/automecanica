@@ -11,6 +11,7 @@ import apoio.Cryptography;
 import dao.CombosDAO;
 import dao.EmployeeDAO;
 import entidade.Employee;
+import java.awt.Color;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 
@@ -27,6 +28,18 @@ public class RegisterEmployeeFrm extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         new CombosDAO().popularCombo("cargo", functionCombo);
+        
+        Color backgroundColor = new Color(53,53,53);
+        Color textColor = new Color(255,255,255);
+        Color detailColor = new Color(235,164,23);
+        Color btnColor = new Color (97,218,251);
+        
+        this.getContentPane().setBackground( backgroundColor );
+        this.saveBtn.setBackground( btnColor );
+        this.nameField.setForeground( detailColor );
+        this.emailField.setForeground( detailColor );
+        this.passwordField.setForeground( detailColor );
+        this.functionCombo.setForeground( detailColor );
     }
 
     /**
@@ -51,12 +64,19 @@ public class RegisterEmployeeFrm extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 17)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(235, 164, 23));
         jLabel1.setText("Cadastro de Funcionário:");
 
+        jLabel2.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Nome:");
 
+        jLabel3.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Email:");
 
+        nameField.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         nameField.setToolTipText("");
         nameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -64,6 +84,8 @@ public class RegisterEmployeeFrm extends javax.swing.JDialog {
             }
         });
 
+        saveBtn.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        saveBtn.setForeground(new java.awt.Color(255, 255, 255));
         saveBtn.setText("Salvar");
         saveBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -71,41 +93,35 @@ public class RegisterEmployeeFrm extends javax.swing.JDialog {
             }
         });
 
+        emailField.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+
+        jLabel4.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Cargo:");
 
+        jLabel5.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Senha:");
 
+        functionCombo.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         functionCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 functionComboActionPerformed(evt);
             }
         });
 
+        passwordField.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel2))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(emailField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
-                    .addComponent(nameField, javax.swing.GroupLayout.Alignment.LEADING))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(93, 93, 93))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
-                        .addComponent(functionCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                .addComponent(jLabel4)
+                .addGap(18, 18, 18)
+                .addComponent(functionCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -117,6 +133,17 @@ public class RegisterEmployeeFrm extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(emailField, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
+                    .addComponent(nameField))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {emailField, functionCombo, nameField, passwordField});
@@ -156,19 +183,33 @@ public class RegisterEmployeeFrm extends javax.swing.JDialog {
 
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
         EmployeeDAO employeeDao = new EmployeeDAO();
-        Employee employee = new Employee(
-                nameField.getText(), 
+        int verifyNullName = nameField.getText().length();
+        int verifyNullEmail = emailField.getText().length();
+        int verifyNullPassword = passwordField.getPassword().length;
+        int verifyNullCombo = functionCombo.getSelectedIndex();
+        
+        if(verifyNullName > 5 &&
+           verifyNullEmail > 5 &&
+           verifyNullPassword > 5 &&
+           verifyNullCombo != 0){
+                Employee employee = new Employee(
                 emailField.getText(), 
+                nameField.getText(), 
                 Cryptography.criptografar(new String(passwordField.getPassword())),
                 'a', 
                 ((ComboItem) functionCombo.getSelectedItem()).getCodigo());
 
-        String result = employeeDao.employeeRegister(employee);
-        if(Integer.parseInt(result) > 0){
-            JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
-        } else {
-            JOptionPane.showMessageDialog(null, "Erro ao cadastrar usuário.");
+            String result = employeeDao.employeeRegister(employee);
+            if(Integer.parseInt(result) > 0){
+                JOptionPane.showMessageDialog(null, "Funcionário cadastrado com sucesso!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro ao cadastrar um funcionário.");
+            }
+        }else {
+                JOptionPane.showMessageDialog(null, "Preencha todos campos corretamente.");
         }
+        
+
     }//GEN-LAST:event_saveBtnActionPerformed
 
     private void functionComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_functionComboActionPerformed

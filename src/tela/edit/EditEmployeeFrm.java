@@ -10,6 +10,7 @@ import apoio.Cryptography;
 import dao.CombosDAO;
 import dao.EmployeeDAO;
 import entidade.Employee;
+import java.awt.Color;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -50,7 +51,21 @@ public class EditEmployeeFrm extends javax.swing.JDialog {
             char situationCombo) {
         super(parent, modal);
         initComponents();
+        Color backgroundColor = new Color(53,53,53);
+        Color textColor = new Color(255,255,255);
+        Color detailColor = new Color(235,164,23);
+        Color btnColor = new Color (97,218,251);
+        this.getContentPane().setBackground( backgroundColor );
+        this.saveBtn.setBackground(btnColor);
+        this.saveBtn.setForeground(textColor );
+        
+        
         new CombosDAO().popularCombo("cargo", functionCombo);
+        this.nameField.setForeground( detailColor );
+        this.emailField.setForeground( detailColor );
+        this.functionCombo.setForeground( detailColor );
+        this.situationCombo.setForeground( detailColor );
+        this.passwordField.setForeground( detailColor );
         this.id = id;
         this.emailField.setText(emailField);
         this.nameField.setText(nameField);
@@ -83,8 +98,11 @@ public class EditEmployeeFrm extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 17)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(235, 164, 23));
         jLabel1.setText("Editando Funcionário");
 
+        nameField.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         nameField.setToolTipText("");
         nameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -92,20 +110,32 @@ public class EditEmployeeFrm extends javax.swing.JDialog {
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Nome:");
 
+        emailField.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+
+        jLabel4.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Email:");
 
+        jLabel5.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Senha:");
 
+        jLabel6.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Cargo:");
 
+        functionCombo.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         functionCombo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 functionComboActionPerformed(evt);
             }
         });
 
+        saveBtn.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         saveBtn.setText("Salvar");
         saveBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -113,9 +143,14 @@ public class EditEmployeeFrm extends javax.swing.JDialog {
             }
         });
 
+        jLabel2.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Situação:");
 
+        situationCombo.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
         situationCombo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "A", "I" }));
+
+        passwordField.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -123,15 +158,21 @@ public class EditEmployeeFrm extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(situationCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(saveBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -141,17 +182,13 @@ public class EditEmployeeFrm extends javax.swing.JDialog {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(functionCombo, 0, 212, Short.MAX_VALUE)
                                     .addComponent(emailField)
-                                    .addComponent(passwordField)))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(97, 97, 97)
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(situationCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                    .addComponent(passwordField)))
+                            .addComponent(saveBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(61, 61, 61)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -208,6 +245,7 @@ public class EditEmployeeFrm extends javax.swing.JDialog {
         
         if(Integer.parseInt(result) > 0){
             JOptionPane.showMessageDialog(null, "Usuário editado com sucesso!");
+            dispose();
         } else {
             JOptionPane.showMessageDialog(null, "Erro ao editar usuário.");
         }

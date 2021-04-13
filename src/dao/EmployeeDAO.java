@@ -34,8 +34,8 @@ public class EmployeeDAO {
             
             sql = "Insert into funcionario values "
                     + "(default,"
-                    + " '" + employee.getName() + "',"
                     + " '" + employee.getEmail() + "',"
+                    + " '" + employee.getName() + "',"
                     + " '" + employee.getPassword() + "',"
                     + " 'a'," 
                     + " " + employee.getFunction_id() + ");";

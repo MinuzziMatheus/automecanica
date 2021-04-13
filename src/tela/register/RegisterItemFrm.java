@@ -9,6 +9,7 @@ import apoio.ComboItem;
 import dao.CombosDAO;
 import dao.ItemDAO;
 import entidade.Item;
+import java.awt.Color;
 import javax.swing.JOptionPane;
 
 /**
@@ -23,6 +24,19 @@ public class RegisterItemFrm extends javax.swing.JDialog {
     public RegisterItemFrm(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        
+        Color backgroundColor = new Color(53,53,53);
+        Color textColor = new Color(255,255,255);
+        Color detailColor = new Color(235,164,23);
+        Color btnColor = new Color (97,218,251);
+        
+        
+        this.getContentPane().setBackground( backgroundColor );
+        this.saveBtn.setBackground(btnColor);
+        this.nameField.setForeground( detailColor );
+        this.descriptionField.setForeground( detailColor );
+        this.valueField.setForeground( detailColor );
+        this.amountField.setForeground ( detailColor );
     }
 
     /**
@@ -40,21 +54,35 @@ public class RegisterItemFrm extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         descriptionField = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        valueField = new javax.swing.JTextField();
         saveBtn = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
-        amountField = new javax.swing.JTextField();
+        amountField = new javax.swing.JFormattedTextField();
+        valueField = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jLabel1.setFont(new java.awt.Font("Ubuntu", 1, 17)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(235, 164, 23));
         jLabel1.setText("Cadastro de Itens:");
 
+        jLabel2.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Nome:");
 
+        nameField.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+
+        jLabel3.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Descrição:");
 
+        descriptionField.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+
+        jLabel4.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Valor:");
 
+        saveBtn.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        saveBtn.setForeground(new java.awt.Color(255, 255, 255));
         saveBtn.setText("Salvar");
         saveBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -62,7 +90,13 @@ public class RegisterItemFrm extends javax.swing.JDialog {
             }
         });
 
+        jLabel5.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Quantidade:");
+
+        amountField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
+
+        valueField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -83,15 +117,15 @@ public class RegisterItemFrm extends javax.swing.JDialog {
                             .addComponent(jLabel5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(amountField)
                             .addComponent(nameField)
                             .addComponent(descriptionField)
-                            .addComponent(valueField)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(jLabel1)
-                                .addGap(0, 78, Short.MAX_VALUE)))))
+                            .addComponent(amountField)
+                            .addComponent(valueField))))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(101, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(89, 89, 89))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -112,8 +146,8 @@ public class RegisterItemFrm extends javax.swing.JDialog {
                     .addComponent(valueField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(amountField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(amountField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addComponent(saveBtn)
                 .addGap(21, 21, 21))
@@ -123,19 +157,28 @@ public class RegisterItemFrm extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
-        ItemDAO itemDao = new ItemDAO();
-        Item item = new Item(
-            nameField.getText(),
-            descriptionField.getText(),
-            Double.parseDouble(valueField.getText()),
-            'a',
-            Integer.parseInt(amountField.getText()));
+        int verifyNullName = nameField.getText().length();
+        int verifyNullDescription = descriptionField.getText().length();
+        int verifyNullValue = valueField.getText().length();
+        int verifyNullAmount = amountField.getText().length();
+        if(verifyNullName > 3 && verifyNullDescription > 5 && verifyNullValue >= 1 && verifyNullAmount >= 1) {
+            ItemDAO itemDao = new ItemDAO();
+            Item item = new Item(
+                nameField.getText(),
+                descriptionField.getText(),
+                Double.parseDouble(valueField.getText()),
+                'a',
+                Integer.parseInt(amountField.getText()));
 
-        String result = itemDao.itemRegister(item);
-        if(Integer.parseInt(result) > 0){
-            JOptionPane.showMessageDialog(null, "Item cadastrado com sucesso!");
+            String result = itemDao.itemRegister(item);
+            if(Integer.parseInt(result) > 0){
+                JOptionPane.showMessageDialog(null, "Item cadastrado com sucesso!");
+                dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Erro ao cadastrar usuário.");
+            }
         } else {
-            JOptionPane.showMessageDialog(null, "Erro ao cadastrar usuário.");
+                JOptionPane.showMessageDialog(null, "Preencha todos os espaços adequadamente.");
         }
     }//GEN-LAST:event_saveBtnActionPerformed
 
@@ -182,7 +225,7 @@ public class RegisterItemFrm extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField amountField;
+    private javax.swing.JFormattedTextField amountField;
     private javax.swing.JTextField descriptionField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -191,6 +234,6 @@ public class RegisterItemFrm extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JTextField nameField;
     private javax.swing.JButton saveBtn;
-    private javax.swing.JTextField valueField;
+    private javax.swing.JFormattedTextField valueField;
     // End of variables declaration//GEN-END:variables
 }

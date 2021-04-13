@@ -21,7 +21,7 @@ public class Automecanica {
 
     public static void main(String[] args) {
         if (openConnection()) {
-            new MainFrm().setVisible(true);
+            new LoginFrm().setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "Não foi possível estabelecer a conexão com o banco. Aguarde e tente novamente mais tarde");            
         }  

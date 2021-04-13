@@ -10,11 +10,13 @@ import apoio.Cryptography;
 import apoio.Formatacao;
 import apoio.Validation;
 import dao.AddressDAO;
+import dao.CarDAO;
 import dao.CityDAO;
 import dao.ClientDAO;
 import dao.CombosDAO;
 import dao.StateDAO;
 import entidade.Address;
+import entidade.Car;
 import entidade.City;
 import entidade.Client;
 import entidade.State;
@@ -36,12 +38,12 @@ public class RegisterClientFrm extends javax.swing.JDialog {
         initComponents();
         Color backgroundColor = new Color(53,53,53);
         Color textColor = new Color(255,255,255);
-//        Color detailColor = new Color(235,164,23);
         Color btnColor = new Color (97,218,251);
         
         this.getContentPane().setBackground( backgroundColor );
         this.saveBtn.setBackground( btnColor );
         this.saveBtn.setForeground( textColor );
+        this.subtitleDescription.setForeground( textColor );
         
         combosDAO.popularCombo("estado", ufCombo);
     }
@@ -73,6 +75,19 @@ public class RegisterClientFrm extends javax.swing.JDialog {
         ufCombo = new javax.swing.JComboBox<>();
         cityCombo = new javax.swing.JComboBox<>();
         cpfField = new javax.swing.JFormattedTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        nameCarField = new javax.swing.JTextField();
+        modelField = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        plateField = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        descriptionField = new javax.swing.JTextArea();
+        subtitleDescription = new javax.swing.JLabel();
+        yearField = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -139,13 +154,62 @@ public class RegisterClientFrm extends javax.swing.JDialog {
             ex.printStackTrace();
         }
 
+        jLabel5.setFont(new java.awt.Font("Ubuntu", 1, 16)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(235, 164, 23));
+        jLabel5.setText("Sobre o Carro:");
+
+        jLabel11.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("Nome:");
+
+        jLabel12.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("Modelo:");
+
+        jLabel13.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setText("Ano:");
+
+        jLabel14.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel14.setText("Placa:");
+
+        jLabel15.setFont(new java.awt.Font("Ubuntu", 1, 15)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setText("Descrição do problema:");
+
+        descriptionField.setColumns(20);
+        descriptionField.setRows(5);
+        descriptionField.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                descriptionFieldKeyReleased(evt);
+            }
+        });
+        jScrollPane1.setViewportView(descriptionField);
+
+        subtitleDescription.setFont(new java.awt.Font("Ubuntu", 0, 10)); // NOI18N
+        subtitleDescription.setText("Necssário 20 caracteres.");
+
+        try {
+            yearField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel5)
+                .addGap(162, 162, 162))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1)
+                        .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,14 +221,44 @@ public class RegisterClientFrm extends javax.swing.JDialog {
                                 .addContainerGap())))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel13)
+                            .addComponent(jLabel15)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel10)
-                                .addGap(18, 18, 18)
-                                .addComponent(cityCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel10))
+                                .addGap(27, 27, 27)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cityCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(numberField, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(0, 180, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(subtitleDescription)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addComponent(yearField, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(1, 1, 1))
+                                    .addComponent(nameCarField, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGap(11, 11, 11)
+                                        .addComponent(jLabel14)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(plateField, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel12)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(modelField, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -173,32 +267,27 @@ public class RegisterClientFrm extends javax.swing.JDialog {
                                             .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                         .addGap(6, 6, 6))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE)
+                                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGap(10, 10, 10)))
                                 .addGap(1, 1, 1)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(1, 1, 1)
-                                        .addComponent(numberField, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(ufCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(streetField, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(neighborhoodField, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(streetField, javax.swing.GroupLayout.PREFERRED_SIZE, 338, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(neighborhoodField, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel3)
                                     .addComponent(jLabel2))
-                                .addGap(0, 25, Short.MAX_VALUE)
+                                .addGap(0, 0, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(1, 1, 1)
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addComponent(cpfField)
-                                            .addComponent(emailField, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE))))))
+                                            .addComponent(emailField, javax.swing.GroupLayout.DEFAULT_SIZE, 338, Short.MAX_VALUE)))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(ufCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(29, 29, 29))))
         );
 
@@ -239,9 +328,29 @@ public class RegisterClientFrm extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cityCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10))
+                .addGap(11, 11, 11)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(nameCarField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11)
+                    .addComponent(jLabel12)
+                    .addComponent(modelField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel13)
+                    .addComponent(jLabel14)
+                    .addComponent(plateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(yearField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel15)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(subtitleDescription)
+                .addGap(2, 2, 2)
                 .addComponent(saveBtn)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {emailField, nameField, streetField});
@@ -262,6 +371,11 @@ public class RegisterClientFrm extends javax.swing.JDialog {
         int verifyNullNeigh = neighborhoodField.getText().length();
         int verifyNullCity = cityCombo.getSelectedIndex();
         int verifyNullUF = ufCombo.getSelectedIndex();
+        int verifyNullNCar = nameCarField.getText().length();
+        int verifyNullModel = modelField.getText().length();
+        int verifyNullYear = yearField.getText().length();
+        int verifyNullPlate = plateField.getText().length();
+        int verifyNullDescription = descriptionField.getText().length();
         
         if (verifyNullName > 5 &&
             Validation.isCPF(Formatacao.removerFormatacao(cpfField.getText())) &&
@@ -270,7 +384,12 @@ public class RegisterClientFrm extends javax.swing.JDialog {
             verifyNullNumber > 1 &&
             verifyNullNeigh > 4 &
             verifyNullCity > 0 &&
-            verifyNullUF > 0) {
+            verifyNullUF > 0 &&
+            verifyNullNCar >= 3 &&
+            verifyNullModel > 2 &&
+            verifyNullYear >= 2 &&
+            verifyNullPlate >= 8 &&
+            verifyNullDescription >= 20) {
             Client client = new Client(
                 nameField.getText(),
                 cpfField.getText(),
@@ -286,10 +405,21 @@ public class RegisterClientFrm extends javax.swing.JDialog {
                     insertedClientId,
                     cityCombo.getSelectedIndex()
             );
-
             String resultAddress = addressDAO.createAddress(address);
+    //      -----------------CAR------------------------- 
+            CarDAO carDAO = new CarDAO();
+            Car car = new Car(
+                    nameCarField.getText(),
+                    modelField.getText(),
+                    Integer.parseInt(yearField.getText()),
+                    plateField.getText(),
+                    insertedClientId,
+                    descriptionField.getText()
+            );
+            String resultCar = carDAO.createCar(car);
+            
 
-            String finalResut = resultAddress + resultClient;
+            String finalResut = resultAddress + resultClient + resultCar;
             if(Integer.parseInt(finalResut) > 0){
                 JOptionPane.showMessageDialog(null, "Usuário cadastrado com sucesso!");
                 dispose();
@@ -307,6 +437,16 @@ public class RegisterClientFrm extends javax.swing.JDialog {
         String complement = " estado_id = " + ci.getCodigo();
         combosDAO.popularCombo("cidade", cityCombo, complement);
     }//GEN-LAST:event_ufComboItemStateChanged
+
+    private void descriptionFieldKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_descriptionFieldKeyReleased
+        int totalSize = 20 - descriptionField.getText().length();
+        if(totalSize > 0){
+            subtitleDescription.setText("Necessário "+ totalSize +" caracteres.");
+        } else if(totalSize == 0){
+            subtitleDescription.setForeground(Color.green);
+            subtitleDescription.setText("Mínimo de caracteres atingido.");
+        }
+    }//GEN-LAST:event_descriptionFieldKeyReleased
 
     /**
      * @param args the command line arguments
@@ -353,21 +493,34 @@ public class RegisterClientFrm extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> cityCombo;
     private javax.swing.JFormattedTextField cpfField;
+    private javax.swing.JTextArea descriptionField;
     private javax.swing.JTextField emailField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField modelField;
+    private javax.swing.JTextField nameCarField;
     private javax.swing.JTextField nameField;
     private javax.swing.JTextField neighborhoodField;
     private javax.swing.JTextField numberField;
+    private javax.swing.JTextField plateField;
     private javax.swing.JButton saveBtn;
     private javax.swing.JTextField streetField;
+    private javax.swing.JLabel subtitleDescription;
     private javax.swing.JComboBox<String> ufCombo;
+    private javax.swing.JFormattedTextField yearField;
     // End of variables declaration//GEN-END:variables
 }
